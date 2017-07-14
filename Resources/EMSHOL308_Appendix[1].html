@@ -1,0 +1,4411 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<title>Troubleshooting AD Replication Errors</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Segoe UI";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Light";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Segoe UI Semibold";
+	panose-1:2 11 7 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Segoe Semibold";}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Symbol";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Segoe;}
+@font-face
+	{font-family:"Franklin Gothic Book";
+	panose-1:2 11 5 3 2 1 2 2 2 4;}
+@font-face
+	{font-family:"\@MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+h1
+	{mso-style-link:"Heading 1 Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-before:always;
+	font-size:22.0pt;
+	font-family:"Segoe UI Light",sans-serif;
+	color:#000092;
+	font-weight:bold;}
+h2
+	{mso-style-link:"Heading 2 Char";
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-before:always;
+	page-break-after:avoid;
+	border:none;
+	padding:0in;
+	font-size:20.0pt;
+	font-family:"Segoe UI Semibold",sans-serif;
+	color:#000092;
+	font-weight:bold;}
+h3
+	{mso-style-link:"Heading 3 Char";
+	margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.05in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Segoe UI Light",sans-serif;
+	color:#288AC6;
+	font-weight:bold;}
+h4
+	{mso-style-link:"Heading 4 Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.1in;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Segoe UI Light",sans-serif;
+	font-weight:bold;}
+h5
+	{mso-style-link:"Heading 5 Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.15in;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Segoe UI Light",sans-serif;
+	font-weight:bold;}
+h6
+	{mso-style-link:"Heading 6 Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.2in;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Segoe UI Light",sans-serif;
+	font-weight:bold;}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{mso-style-link:"Heading 7 Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.25in;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Segoe UI Light",sans-serif;
+	color:#404040;
+	font-weight:bold;}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{mso-style-link:"Heading 8 Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.5in;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Segoe UI Light",sans-serif;
+	color:#404040;
+	font-weight:bold;
+	font-style:italic;}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{mso-style-link:"Heading 9 Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.5in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Segoe UI Light",sans-serif;
+	color:#404040;
+	font-weight:bold;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin:0in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;
+	text-transform:uppercase;
+	font-weight:bold;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.15in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;
+	font-variant:small-caps;
+	font-weight:bold;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:20.9pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoToc4, li.MsoToc4, div.MsoToc4
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:31.7pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoToc5, li.MsoToc5, div.MsoToc5
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:41.75pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoToc6, li.MsoToc6, div.MsoToc6
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:54.7pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoToc7, li.MsoToc7, div.MsoToc7
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:66.25pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;
+	font-style:italic;}
+p.MsoToc8, li.MsoToc8, div.MsoToc8
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:77.05pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;
+	font-style:italic;}
+p.MsoToc9, li.MsoToc9, div.MsoToc9
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:87.85pt;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;
+	font-style:italic;}
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{mso-style-link:"Comment Text Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-link:"Caption Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+span.MsoCommentReference
+	{font-family:"Calibri",sans-serif;}
+span.MsoEndnoteReference
+	{font-family:"Calibri",sans-serif;
+	position:relative;
+	top:-2.0pt;
+	font-weight:bold;
+	vertical-align:baseline;}
+p.MsoEndnoteText, li.MsoEndnoteText, div.MsoEndnoteText
+	{mso-style-link:"Endnote Text Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:5.0pt;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListBulletCxSpFirst, li.MsoListBulletCxSpFirst, div.MsoListBulletCxSpFirst
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListBulletCxSpMiddle, li.MsoListBulletCxSpMiddle, div.MsoListBulletCxSpMiddle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListBulletCxSpLast, li.MsoListBulletCxSpLast, div.MsoListBulletCxSpLast
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListNumber, li.MsoListNumber, div.MsoListNumber
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoList2, li.MsoList2, div.MsoList2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	background:#F2F2F2;
+	font-size:10.0pt;
+	font-family:"Cambria",serif;}
+p.MsoList3, li.MsoList3, div.MsoList3
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.75in;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoList3CxSpFirst, li.MsoList3CxSpFirst, div.MsoList3CxSpFirst
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoList3CxSpMiddle, li.MsoList3CxSpMiddle, div.MsoList3CxSpMiddle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoList3CxSpLast, li.MsoList3CxSpLast, div.MsoList3CxSpLast
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.75in;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListBullet2, li.MsoListBullet2, div.MsoListBullet2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListBullet2CxSpFirst, li.MsoListBullet2CxSpFirst, div.MsoListBullet2CxSpFirst
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListBullet2CxSpMiddle, li.MsoListBullet2CxSpMiddle, div.MsoListBullet2CxSpMiddle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListBullet2CxSpLast, li.MsoListBullet2CxSpLast, div.MsoListBullet2CxSpLast
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListNumber2, li.MsoListNumber2, div.MsoListNumber2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListNumber3, li.MsoListNumber3, div.MsoListNumber3
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListNumber3CxSpFirst, li.MsoListNumber3CxSpFirst, div.MsoListNumber3CxSpFirst
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListNumber3CxSpMiddle, li.MsoListNumber3CxSpMiddle, div.MsoListNumber3CxSpMiddle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListNumber3CxSpLast, li.MsoListNumber3CxSpLast, div.MsoListNumber3CxSpLast
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{mso-style-link:"Title Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:15.0pt;
+	margin-left:0in;
+	border:none;
+	padding:0in;
+	font-size:32.0pt;
+	font-family:"Calibri",sans-serif;
+	color:#00A600;
+	font-weight:bold;}
+p.MsoTitleCxSpFirst, li.MsoTitleCxSpFirst, div.MsoTitleCxSpFirst
+	{mso-style-link:"Title Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	border:none;
+	padding:0in;
+	font-size:32.0pt;
+	font-family:"Calibri",sans-serif;
+	color:#00A600;
+	font-weight:bold;}
+p.MsoTitleCxSpMiddle, li.MsoTitleCxSpMiddle, div.MsoTitleCxSpMiddle
+	{mso-style-link:"Title Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	border:none;
+	padding:0in;
+	font-size:32.0pt;
+	font-family:"Calibri",sans-serif;
+	color:#00A600;
+	font-weight:bold;}
+p.MsoTitleCxSpLast, li.MsoTitleCxSpLast, div.MsoTitleCxSpLast
+	{mso-style-link:"Title Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:15.0pt;
+	margin-left:0in;
+	border:none;
+	padding:0in;
+	font-size:32.0pt;
+	font-family:"Calibri",sans-serif;
+	color:#00A600;
+	font-weight:bold;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{mso-style-link:"Body Text Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListContinue, li.MsoListContinue, div.MsoListContinue
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.75in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListContinue2, li.MsoListContinue2, div.MsoListContinue2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:1.0in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListContinue3, li.MsoListContinue3, div.MsoListContinue3
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:1.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListContinue4, li.MsoListContinue4, div.MsoListContinue4
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:1.5in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListContinue5, li.MsoListContinue5, div.MsoListContinue5
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:1.75in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{mso-style-link:"Subtitle Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.3in;
+	line-height:115%;
+	font-size:22.0pt;
+	font-family:"Calibri",sans-serif;
+	color:#00A600;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:#000092;
+	font-style:italic;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{font-family:"Times New Roman",serif;
+	color:#00A600;
+	font-style:italic;
+	text-decoration:underline;}
+strong
+	{font-family:"Cambria",serif;
+	color:windowtext;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-link:"Document Map Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	font-size:8.0pt;
+	font-family:"Tahoma",sans-serif;}
+p
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
+	{mso-style-link:"Comment Subject Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	line-height:115%;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"Balloon Text Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;}
+span.MsoPlaceholderText
+	{color:gray;}
+p.MsoNoSpacing, li.MsoNoSpacing, div.MsoNoSpacing
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Cambria",serif;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-link:"List Paragraph Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.MsoQuote, li.MsoQuote, div.MsoQuote
+	{mso-style-link:"Quote Char";
+	margin-top:10.0pt;
+	margin-right:.6in;
+	margin-bottom:8.0pt;
+	margin-left:.6in;
+	text-align:center;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	color:#404040;
+	font-style:italic;}
+p.MsoIntenseQuote, li.MsoIntenseQuote, div.MsoIntenseQuote
+	{mso-style-link:"Intense Quote Char";
+	margin-top:.25in;
+	margin-right:.6in;
+	margin-bottom:.25in;
+	margin-left:.6in;
+	text-align:center;
+	line-height:115%;
+	border:none;
+	padding:0in;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	color:#00A600;
+	font-style:italic;}
+span.MsoIntenseEmphasis
+	{color:#000092;
+	font-weight:bold;
+	font-style:italic;}
+span.MsoSubtleReference
+	{font-variant:small-caps;
+	color:#5A5A5A;}
+span.MsoIntenseReference
+	{font-variant:small-caps;
+	color:#00A600;
+	letter-spacing:.25pt;
+	font-weight:bold;}
+span.MsoBookTitle
+	{font-variant:small-caps;
+	text-transform:none;
+	position:relative;
+	top:0pt;
+	letter-spacing:0pt;
+	font-weight:bold;
+	font-style:italic;}
+p.MsoTocHeading, li.MsoTocHeading, div.MsoTocHeading
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:14.0pt;
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+span.TitleChar
+	{mso-style-name:"Title Char";
+	mso-style-link:Title;
+	font-family:"Calibri",sans-serif;
+	color:#00A600;
+	font-weight:bold;}
+span.SubtitleChar
+	{mso-style-name:"Subtitle Char";
+	mso-style-link:Subtitle;
+	font-family:"Calibri",sans-serif;
+	color:#00A600;
+	font-weight:bold;}
+span.Heading1Char
+	{mso-style-name:"Heading 1 Char";
+	mso-style-link:"Heading 1";
+	font-family:"Segoe UI Light",sans-serif;
+	color:#000092;
+	font-weight:bold;}
+span.BodyTextChar
+	{mso-style-name:"Body Text Char";
+	mso-style-link:"Body Text";
+	font-family:"Cambria",serif;}
+span.BalloonTextChar
+	{mso-style-name:"Balloon Text Char";
+	mso-style-link:"Balloon Text";
+	font-family:"Calibri",sans-serif;}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-link:"Heading 2";
+	font-family:"Segoe UI Semibold",sans-serif;
+	color:#000092;
+	font-weight:bold;}
+span.Heading4Char
+	{mso-style-name:"Heading 4 Char";
+	mso-style-link:"Heading 4";
+	font-family:"Segoe UI Light",sans-serif;
+	font-weight:bold;}
+span.Heading3Char
+	{mso-style-name:"Heading 3 Char";
+	mso-style-link:"Heading 3";
+	font-family:"Segoe UI Light",sans-serif;
+	color:#288AC6;
+	font-weight:bold;}
+p.TaskSetup, li.TaskSetup, div.TaskSetup
+	{mso-style-name:"Task Setup";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	text-indent:-.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;
+	color:#000092;}
+p.AdditionalInformation, li.AdditionalInformation, div.AdditionalInformation
+	{mso-style-name:"Additional Information";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.75in;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:9.0pt;
+	font-family:"Cambria",serif;
+	color:#000092;}
+p.Caution, li.Caution, div.Caution
+	{mso-style-name:Caution;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.75in;
+	text-indent:-.25in;
+	line-height:150%;
+	font-size:9.0pt;
+	font-family:"Cambria",serif;
+	color:red;}
+p.TableBody, li.TableBody, div.TableBody
+	{mso-style-name:"Table Body";
+	margin-top:2.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.05in;
+	line-height:11.0pt;
+	font-size:9.0pt;
+	font-family:"Cambria",serif;}
+p.TableHead, li.TableHead, div.TableHead
+	{mso-style-name:"Table Head";
+	margin-top:2.0pt;
+	margin-right:0in;
+	margin-bottom:2.0pt;
+	margin-left:.05in;
+	line-height:11.0pt;
+	font-size:9.0pt;
+	font-family:"Segoe Semibold",sans-serif;
+	font-weight:bold;}
+p.Le, li.Le, div.Le
+	{mso-style-name:Le;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	line-height:8.0pt;
+	font-size:8.0pt;
+	font-family:"Times New Roman",serif;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;
+	font-family:"Calibri",sans-serif;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;
+	font-family:"Calibri",sans-serif;}
+p.TableImage, li.TableImage, div.TableImage
+	{mso-style-name:"Table Image";
+	margin-top:2.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:3.35pt;
+	font-size:9.0pt;
+	font-family:"Arial",sans-serif;}
+span.CommentTextChar
+	{mso-style-name:"Comment Text Char";
+	mso-style-link:"Comment Text";
+	font-family:"Calibri",sans-serif;}
+span.CommentSubjectChar
+	{mso-style-name:"Comment Subject Char";
+	mso-style-link:"Comment Subject";
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+span.Heading5Char
+	{mso-style-name:"Heading 5 Char";
+	mso-style-link:"Heading 5";
+	font-family:"Segoe UI Light",sans-serif;
+	font-weight:bold;}
+span.Heading6Char
+	{mso-style-name:"Heading 6 Char";
+	mso-style-link:"Heading 6";
+	font-family:"Segoe UI Light",sans-serif;
+	font-weight:bold;}
+span.Heading7Char
+	{mso-style-name:"Heading 7 Char";
+	mso-style-link:"Heading 7";
+	font-family:"Segoe UI Light",sans-serif;
+	color:#404040;
+	font-weight:bold;}
+span.Heading8Char
+	{mso-style-name:"Heading 8 Char";
+	mso-style-link:"Heading 8";
+	font-family:"Segoe UI Light",sans-serif;
+	color:#404040;
+	font-weight:bold;
+	font-style:italic;}
+span.Heading9Char
+	{mso-style-name:"Heading 9 Char";
+	mso-style-link:"Heading 9";
+	font-family:"Segoe UI Light",sans-serif;
+	color:#404040;
+	font-weight:bold;}
+p.Answer, li.Answer, div.Answer
+	{mso-style-name:Answer;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.Code, li.Code, div.Code
+	{mso-style-name:Code;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	background:black;
+	font-size:9.0pt;
+	font-family:Consolas;}
+p.CodeComment, li.CodeComment, div.CodeComment
+	{mso-style-name:"Code Comment";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:.1in;
+	font-size:10.0pt;
+	font-family:Consolas;}
+p.CodeCommentCxSpFirst, li.CodeCommentCxSpFirst, div.CodeCommentCxSpFirst
+	{mso-style-name:"Code CommentCxSpFirst";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.1in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:Consolas;}
+p.CodeCommentCxSpMiddle, li.CodeCommentCxSpMiddle, div.CodeCommentCxSpMiddle
+	{mso-style-name:"Code CommentCxSpMiddle";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.1in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:Consolas;}
+p.CodeCommentCxSpLast, li.CodeCommentCxSpLast, div.CodeCommentCxSpLast
+	{mso-style-name:"Code CommentCxSpLast";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:.1in;
+	font-size:10.0pt;
+	font-family:Consolas;}
+p.Art, li.Art, div.Art
+	{mso-style-name:Art;
+	margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	text-align:center;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+span.CaptionChar
+	{mso-style-name:"Caption Char";
+	mso-style-link:Caption;
+	font-weight:bold;}
+span.CSuperscript
+	{mso-style-name:CSuperscript;
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;
+	text-decoration:none;
+	vertical-align:super;}
+p.Default, li.Default, div.Default
+	{mso-style-name:Default;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-autospace:none;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	color:black;}
+span.descritxt2
+	{mso-style-name:descri_txt2;
+	font-weight:bold;}
+p.DocInfoCover, li.DocInfoCover, div.DocInfoCover
+	{mso-style-name:"DocInfo\(Cover\)";
+	mso-style-link:"DocInfo\(Cover\) Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+span.DocInfoCoverChar
+	{mso-style-name:"DocInfo\(Cover\) Char";
+	mso-style-link:"DocInfo\(Cover\)";
+	font-weight:bold;}
+span.DocumentMapChar
+	{mso-style-name:"Document Map Char";
+	mso-style-link:"Document Map";
+	font-family:"Tahoma",sans-serif;}
+span.EndnoteTextChar
+	{mso-style-name:"Endnote Text Char";
+	mso-style-link:"Endnote Text";
+	font-family:"Cambria",serif;}
+p.IDText, li.IDText, div.IDText
+	{mso-style-name:ID_Text;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	background:#F2F2F2;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;
+	color:red;}
+span.IntenseQuoteChar
+	{mso-style-name:"Intense Quote Char";
+	mso-style-link:"Intense Quote";
+	font-family:"Cambria",serif;
+	color:#00A600;
+	font-style:italic;}
+p.Legal, li.Legal, div.Legal
+	{mso-style-name:Legal;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+p.ListContinue6, li.ListContinue6, div.ListContinue6
+	{mso-style-name:"List Continue 6";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:2.0in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.ListContinue7, li.ListContinue7, div.ListContinue7
+	{mso-style-name:"List Continue 7";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:2.25in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.ListContinue8, li.ListContinue8, div.ListContinue8
+	{mso-style-name:"List Continue 8";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:2.5in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+p.ListContinue9, li.ListContinue9, div.ListContinue9
+	{mso-style-name:"List Continue 9";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:2.75in;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Cambria",serif;}
+span.ListParagraphChar
+	{mso-style-name:"List Paragraph Char";
+	mso-style-link:"List Paragraph";
+	font-family:"Cambria",serif;}
+p.NotesCourse, li.NotesCourse, div.NotesCourse
+	{mso-style-name:Notes_Course;
+	mso-style-link:"Notes_Course Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+span.NotesCourseChar
+	{mso-style-name:"Notes_Course Char";
+	mso-style-link:Notes_Course;
+	font-family:"Calibri",sans-serif;}
+p.NotesCourseLabel, li.NotesCourseLabel, div.NotesCourseLabel
+	{mso-style-name:"Notes_Course Label";
+	mso-style-link:"Notes_Course Label Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+span.NotesCourseLabelChar
+	{mso-style-name:"Notes_Course Label Char";
+	mso-style-link:"Notes_Course Label";
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+p.OpenIssue, li.OpenIssue, div.OpenIssue
+	{mso-style-name:"Open Issue";
+	mso-style-link:"Open Issue Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	background:#FFFFCC;
+	font-size:10.0pt;
+	font-family:"Segoe UI",sans-serif;}
+span.OpenIssueChar
+	{mso-style-name:"Open Issue Char";
+	mso-style-link:"Open Issue";
+	font-family:"Segoe UI",sans-serif;
+	background:#FFFFCC;}
+span.replacenewlinesymbol
+	{mso-style-name:replace_newline_symbol;}
+p.SetupTaskHeading, li.SetupTaskHeading, div.SetupTaskHeading
+	{mso-style-name:"Setup Task Heading";
+	margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-before:always;
+	page-break-after:avoid;
+	border:none;
+	padding:0in;
+	font-size:18.0pt;
+	font-family:"Segoe UI Semibold",sans-serif;
+	color:#000092;
+	font-weight:bold;}
+p.Slide, li.Slide, div.Slide
+	{mso-style-name:Slide;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:right;
+	page-break-after:avoid;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;
+	color:#7F7F7F;}
+p.Start-EndSeparator, li.Start-EndSeparator, div.Start-EndSeparator
+	{mso-style-name:"Start-End Separator";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-align:center;
+	line-height:115%;
+	background:#D9D9D9;
+	font-size:9.0pt;
+	font-family:"Calibri",sans-serif;}
+p.StatusText, li.StatusText, div.StatusText
+	{mso-style-name:"Status Text";
+	mso-style-link:"Status Text Char";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+span.StatusTextChar
+	{mso-style-name:"Status Text Char";
+	mso-style-link:"Status Text";
+	font-family:"Calibri",sans-serif;
+	font-weight:bold;}
+p.TableListContinue, li.TableListContinue, div.TableListContinue
+	{mso-style-name:"Table List Continue";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.25in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableListContinue2, li.TableListContinue2, div.TableListContinue2
+	{mso-style-name:"Table List Continue 2";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.5in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableListContinue3, li.TableListContinue3, div.TableListContinue3
+	{mso-style-name:"Table List Continue 3";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.75in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableListContinue4, li.TableListContinue4, div.TableListContinue4
+	{mso-style-name:"Table List Continue 4";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:1.0in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableListContinue5, li.TableListContinue5, div.TableListContinue5
+	{mso-style-name:"Table List Continue 5";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:1.25in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableListContinue6, li.TableListContinue6, div.TableListContinue6
+	{mso-style-name:"Table List Continue 6";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:1.5in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableListContinue7, li.TableListContinue7, div.TableListContinue7
+	{mso-style-name:"Table List Continue 7";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:1.75in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableListContinue8, li.TableListContinue8, div.TableListContinue8
+	{mso-style-name:"Table List Continue 8";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:2.0in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableListContinue9, li.TableListContinue9, div.TableListContinue9
+	{mso-style-name:"Table List Continue 9";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:2.25in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.TableText, li.TableText, div.TableText
+	{mso-style-name:"Table Text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+p.PowerShell, li.PowerShell, div.PowerShell
+	{mso-style-name:PowerShell;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.5in;
+	line-height:115%;
+	background:#002060;
+	font-size:9.0pt;
+	font-family:Consolas;}
+span.QuoteChar
+	{mso-style-name:"Quote Char";
+	mso-style-link:Quote;
+	font-family:"Cambria",serif;
+	color:#404040;
+	font-style:italic;}
+p.Subhead, li.Subhead, div.Subhead
+	{mso-style-name:Subhead;
+	margin-top:10.0pt;
+	margin-right:.6in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:115%;
+	background:white;
+	font-size:14.0pt;
+	font-family:"Segoe UI Symbol",sans-serif;
+	color:#262626;}
+.MsoChpDefault
+	{font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:10.0pt;
+	line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.5in 1.0in 1.5in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link="#000092" vlink="#00A600">
+
+<div class=WordSection1>
+
+<p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+style='font-size:12.0pt;font-family:"Times New Roman",serif'>&nbsp;</span></p>
+
+<h1>Appendix</h1>
+
+<h3>Exercise 1: AD replication symptom identification</h3>
+
+<h4>Answers</h4>
+
+<p class=MsoBodyText style='margin-left:.25in'><b>When did DC1 last
+successfully replicate the ROOT partition from DC2?</b></p>
+
+<p class=MsoBodyText style='margin-left:.25in'>Use </p>
+
+<p class=MsoBodyText style='margin-left:.25in'>DC1 holds all FSMO roles and has
+recently restarted.  </p>
+
+<p class=MsoBodyText style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoBodyText style='margin-left:.25in'><b>What impact do the current AD
+replication failures on DC1 have on the environment?</b></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><b>&nbsp;</b></p>
+
+<p class=MsoCaption>Table 2: FSMO role and initial synchronization</p>
+
+<table class=LessonTable border=1 cellspacing=0 cellpadding=0 width="94%"
+ style='width:94.0%;margin-left:.1in;border-collapse:collapse;border:none'>
+ <thead>
+  <tr style='page-break-inside:avoid'>
+   <td width=390 valign=top style='width:146.35pt;border:solid #00A600 1.0pt;
+   background:#B6B6FF;padding:.05in 4.3pt .7pt 4.3pt'>
+   <p class=TableText><b>Role</b></p>
+   </td>
+   <td width=390 valign=top style='width:146.4pt;border:solid #00A600 1.0pt;
+   border-left:none;background:#B6B6FF;padding:.05in 4.3pt .7pt 4.3pt'>
+   <p class=TableText><b>Partition that must replicate for role to become
+   active</b></p>
+   </td>
+   <td width=390 valign=top style='width:146.4pt;border:solid #00A600 1.0pt;
+   border-left:none;background:#B6B6FF;padding:.05in 4.3pt .7pt 4.3pt'>
+   <p class=TableText><b>Impact</b></p>
+   </td>
+  </tr>
+ </thead>
+ <tr style='page-break-inside:avoid'>
+  <td width=390 valign=top style='width:146.35pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Schema Master</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Schema</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>No impact as this partition replicates successfully</p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=390 valign=top style='width:146.35pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Domain Naming Master</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Configuration</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>No impact as this partition replicates successfully</p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=390 valign=top style='width:146.35pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>PDC emulator</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Domain</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>&nbsp;</p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=390 valign=top style='width:146.35pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>RID Master</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Domain</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>The ROOT partition fails to replicate to DC1 and any RID
+  pool allocations will fail as a result.  Since both DC1 and DC2 were recently
+  imported into a new Hyper-V host, their local RID pool was discarded, and
+  therefor operations that require a RID will fail (such as user, computer account
+  or security group creation)</p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=390 valign=top style='width:146.35pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Infrastructure </p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Domain (and potentially application partitions)</p>
+  </td>
+  <td width=390 valign=top style='width:146.4pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>&nbsp;</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNoSpacing>&nbsp;</p>
+
+<h4><a name="_Ref377801741">Repadmin /listhelp</a></h4>
+
+<p class=MsoList2>DSA_LIST = { &lt;DSA_NAME&gt; | * | &lt;part_server_name&gt;*
+| site:&lt;SITE_NAME&gt;</p>
+
+<p class=MsoList2>             | gc: | nc: | pnc: | mnc: |
+fsmo_&lt;FSMO_TYPE&gt;:&lt;FSMO_DN&gt; } </p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>Examples:</p>
+
+<p class=MsoList2>&quot;*&quot; = All DSAs in the
+enterprise/forest/configuration set.</p>
+
+<p class=MsoList2>&quot;part_server_name*&quot; = would pick
+&quot;part_server_name_dc_01&quot; and &quot;part_server_name_dc_02&quot; but
+not server &quot;part_server_diff_name&quot;.</p>
+
+<p class=MsoList2>&quot;site:east_site1&quot; = All DSAs in site
+&quot;east_site1&quot;.</p>
+
+<p class=MsoList2>&quot;gc:&quot; = All GCs in the enterprise.</p>
+
+<p class=MsoList2>&quot;nc:DC=fabrikam,...&quot; = All DSAs hosting
+DC=fabrikam,...</p>
+
+<p class=MsoList2>&quot;pnc:DC=fabrikam,...&quot; = All DSAs hosting a partial
+copy of DC=fabrikam,...</p>
+
+<p class=MsoList2>&quot;mnc:DC=fabrikam,...&quot; = All DSAs hosting a master
+copy of DC=fabrikam,...</p>
+
+<p class=MsoList2>&quot;fsmo_pdc:DC=my-corp-dom,DC=com&quot; - repadmin runs
+against the PDC in the NC  &quot;DC=my-corp-dom,DC=com&quot;</p>
+
+<p class=MsoList2>&quot;fsmo_istg:east_site1&quot; would pick the ISTG for the
+east_site1 site.</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>Additional option for DSA_LIST:  /homeserver:[dns name]</p>
+
+<p class=MsoList2>    The initial DS server that facilitates DSA_LIST expansion
+is called the homeserver. If the DSA_LIST argument is a resolvable server name
+(such as a DNS or WINS name) this will be used as the homeserver.  If a
+non-resolvable parameter is used for the DSA_LIST, repadmin will use the
+locator to find a server to be used as the homeserver.  If the locator does not
+find a server, repadmin will try the local box (port 389).  The
+/homeserver:[dns name] option is available to explicitly control home server
+selection. This is especially useful when there are more than one forest or
+configuration set possible.  For example, the DSA_LIST command
+&quot;fsmo_istg:site1&quot; would target the locally joined domain's directory,
+so to target an AD/LDS instance, /homeserver:adldsinstance:50000 could be used
+to resolve the fsmo_istg to site1 defined in the ADAM configuration set on
+adldsinstance:50000 instead of the fsmo_istg to site1 defined in the locally
+joined domain.</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>&nbsp;</p>
+
+<p class=MsoList2>FSMO_TYPE = dnm | schema | pdc | rid | im | istg</p>
+
+<p class=MsoList2>NOTE: different types of FSMOs require different base DNs/RDNs.</p>
+
+<p class=MsoList2>&quot;fsmo_dnm:&quot; - is an enterprise wide FSMO, and
+doesn't take any DN.</p>
+
+<p class=MsoList2>&quot;fsmo_schema:&quot; - is an enterprise wide FSMO, and
+doesn't take any DN.</p>
+
+<p class=MsoList2>&quot;fsmo_pdc:&quot; - is a domain specific FSMO, and takes
+the DN of the domain the   user wants.</p>
+
+<p class=MsoList2>&quot;fsmo_rid:&quot; - is a domain specific FSMO, and takes
+the DN of the domain the user wants.</p>
+
+<p class=MsoList2>&quot;fsmo_im:&quot; - is a partition/NC specific FSMO, and
+takes the DN of the NC the user wants.</p>
+
+<p class=MsoList2>&quot;fsmo_istg:&quot; - is a site specific quasi-FSMO, and
+takes the RDN of the site.</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>&nbsp;</p>
+
+<p class=MsoList2>DSA_NAME = { . | &lt;server_dns&gt; | &lt;dsa_guid&gt; |
+&lt;server_obj_rdn&gt; | &lt;dsa_dn&gt; }</p>
+
+<p class=MsoList2>. = Tells repadmin to try to pick one for you.</p>
+
+<p class=MsoList2>adlds_dns:ldap_port = specifies a specific AD LDS instance.</p>
+
+<p class=MsoList2>server_dns = specifies a specific server by DNS.</p>
+
+<p class=MsoList2>dsa_guid = specifies a specific server by its DSA GUID.</p>
+
+<p class=MsoList2>server_obj_rdn$service_short_name = specifies a specific AD
+LDS instance by its full server object rdn.</p>
+
+<p class=MsoList2>server_obj_rdn = specifies a server by its server object rdn
+(usually the same as its NetBios name)</p>
+
+<p class=MsoList2>The &quot;$service_short_name&quot; is not necessarily needed,
+but the DSA will only find a server, if the portion of the server_obj_rdn
+specified in unambiguous.</p>
+
+<p class=MsoList2>dsa_dn = specifies a server by the DN of its DSA object.</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>&nbsp;</p>
+
+<p class=MsoList2>OBJ_LIST = { ncobj:&lt;NC_NAME&gt; | dsaobj: }</p>
+
+<p class=MsoList2>&quot;ncobj:&quot; = means use the DN of NC Head specified in
+NC_NAME.</p>
+
+<p class=MsoList2>&quot;dsaobj:&quot; = means use the DN of the DSA we're
+connected to.</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>NC_NAME = { config: | schema: | domain: }</p>
+
+<p class=MsoList2>&quot;config:&quot; = Configuration Directory Partition.</p>
+
+<p class=MsoList2>&quot;schema:&quot; = Schema Directory Partition.</p>
+
+<p class=MsoList2>&quot;domain:&quot; = Domain Directory Partition for the
+Domain of the DC repadmin is running against.</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>OBJ_LIST OPTIONS = { /onelevel | /subtree}
+/filter:&lt;Ldap_Filter&gt;</p>
+
+<p class=MsoList2>With these options, the showattr and viewlist commands can be
+used to cover a list of objects, instead of just a single object.</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>NOTES:</p>
+
+<p class=MsoList2> o The * in wildcards are evaluated by LDAP.</p>
+
+<p class=MsoList2> o Some options are not valid in AD LDS such as
+&quot;gc:&quot;, &quot;fsmo_pdc:&quot;, &quot;fsmo_rid&quot;,
+&quot;domain:&quot;, etc</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h3>Exercise 2: The Target Principal Name is Incorrect -2146893022</h3>
+
+<p class=MsoBodyText>The Kerberos client received a KRB_AP_ERR_MODIFIED error
+from the server dc1$. The target name used was E3514235-4B06-11D1-AB04-00C04FC2DCD2/70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e/root.contoso.com@root.contoso.com.
+This indicates that the target server failed to decrypt the ticket provided by
+the client. This can occur when the target server principal name (SPN) is
+registered on an account other than the account the target service is using.
+Ensure that the target SPN is only registered on the account used by the
+server. This error can also happen if the target service account password is
+different than what is configured on the Kerberos Key Distribution Center for
+that target service. Ensure that the service on the server and the KDC are both
+configured to use the same password. If the server name is not fully qualified,
+and the target domain (ROOT.CONTOSO.COM) is different from the client domain
+(ROOT.CONTOSO.COM), check if there are identically named server accounts in
+these two domains, or use the fully-qualified name to identify the server.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<h4><a name="_Ref377979009">Kerberos details</a></h4>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.5pt;border-collapse:collapse;border:none'>
+ <thead>
+  <tr>
+   <td width=205 style='width:76.9pt;border:solid windowtext 1.0pt;border-right:
+   none;background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead>Operation</p>
+   </td>
+   <td width=819 style='width:307.1pt;border:solid windowtext 1.0pt;border-left:
+   none;background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead>AD replication attempt from DC1 to DC2 fails with
+   -2146893022</p>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td width=205 valign=top style='width:76.9pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Kerberos client</p>
+  </td>
+  <td width=819 valign=top style='width:307.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>DC2</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=205 valign=top style='width:76.9pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:#C8F0FF;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Kerberos target</p>
+  </td>
+  <td width=819 valign=top style='width:307.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 0in 0in 0in'>
+  <p class=TableBody>DC1</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=205 valign=top style='width:76.9pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:#C8F0FF;padding:0in 0in 0in 0in'>
+  <p class=TableBody>KDC</p>
+  </td>
+  <td width=819 valign=top style='width:307.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 0in 0in 0in'>
+  <p class=TableBody>DC2</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>This replication error occurs because the source DC (DC1 -
+Kerberos target) failed to verify the AP request that DC2 sent.  Specifically,
+the source DC (DC1) attempted to decrypt the service ticket in the AP request
+and failed.</p>
+
+<p class=MsoBodyText style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>The Service Ticket was encrypted by the KDC (DC2) with the
+password hash of the DC1s computer account stored in AD (the KDCs version of
+the password).</p>
+
+<p class=MsoBodyText style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>The Service Ticket decryption takes place on the Kerberos target
+(DC1).  It attempts to decrypt the ticket with its actual password (which
+differs from what is stored in AD on the KDC).  </p>
+
+<p class=MsoBodyText style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Since the Service Ticket was encrypted with the wrong computer
+account password, the operation fails.</p>
+
+<table class=NotesTable border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width="17%" nowrap valign=top style='width:17.0%;border:solid white 1.0pt;
+  padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourseLabel style='line-height:normal'><img width=24 height=24
+  id="Picture 31" src="EMSHOL308_Appendix_files/image003.png"> More:</p>
+  </td>
+  <td width="83%" valign=top style='width:83.0%;border:solid white 1.0pt;
+  border-left:none;background:#BAFFBA;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourse>For more information, see:</p>
+  <p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:10.5pt'>Troubleshooting AD Replication error -2146893022:
+  The target principal name is incorrect.</span></p>
+  <p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:10.5pt'>http://support.microsoft.com/kb/2090913</span></p>
+  <p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>AND</span></p>
+  <p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:10.5pt'>Kerberos for the busy admin</span></p>
+  <p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:10.5pt'>http://blogs.technet.com/b/askds/archive/2008/03/06/kerberos-for-the-busy-admin.aspx</span></p>
+  <p class=NotesCourse>&nbsp;</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNoSpacing>&nbsp;</p>
+
+<h5>Repadmin /bind failure log details</h5>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.5pt;border-collapse:collapse;border:none'>
+ <thead>
+  <tr>
+   <td width=205 style='width:76.9pt;border:solid windowtext 1.0pt;border-right:
+   none;background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead>Troubleshooting Operation</p>
+   </td>
+   <td width=819 style='width:307.1pt;border:solid windowtext 1.0pt;border-left:
+   none;background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead>Repadmin /bind dc2</p>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td width=205 valign=top style='width:76.9pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Kerberos client</p>
+  </td>
+  <td width=819 valign=top style='width:307.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Win8Client</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=205 valign=top style='width:76.9pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:#C8F0FF;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Kerberos target</p>
+  </td>
+  <td width=819 valign=top style='width:307.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 0in 0in 0in'>
+  <p class=TableBody>DC2</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=205 valign=top style='width:76.9pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:#C8F0FF;padding:0in 0in 0in 0in'>
+  <p class=TableBody>KDC</p>
+  </td>
+  <td width=819 valign=top style='width:307.1pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 0in 0in 0in'>
+  <p class=TableBody>DC1</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>Network trace
+of the LDAP bind failure</span></p>
+
+<p class=MsoNormal style='page-break-after:avoid'><img width=624 height=152
+id="Picture 8" src="EMSHOL308_Appendix_files/image004.jpg"></p>
+
+<p class=MsoCaption style='margin-left:.5in'>Figure 3 Network trace of LDAP
+bind failure</p>
+
+<p class=MsoNormal style='page-break-after:avoid'><img width=624 height=127
+id="Picture 17" src="EMSHOL308_Appendix_files/image005.jpg"></p>
+
+<p class=MsoCaption style='margin-left:.5in'>Figure 4 Network trace with Netmon
+3.4 Authentication traffic filter applied</p>
+
+<p class=MsoNormal style='page-break-after:avoid'><img width=558 height=709
+id="Picture 16" src="EMSHOL308_Appendix_files/image006.png"></p>
+
+<p class=MsoCaption style='margin-left:.5in'>Figure 5 Kerberos error in LDAP
+bind response</p>
+
+<p class=MsoNormal><b><span style='font-family:"Calibri",sans-serif'>System
+event log</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>Log
+Name:      System</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>Source:       
+Microsoft-Windows-Security-Kerberos</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>Event
+ID:      4</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>Level:        
+Error</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>Computer:     
+win8client.root.contoso.com</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>Description:</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>The
+Kerberos client received a KRB_AP_ERR_MODIFIED error from the server dc2$. The
+target name used was
+LDAP/DC2.root.contoso.com/root.contoso.com@ROOT.CONTOSO.COM. This indicates
+that the target server failed to decrypt the ticket provided by the client. This
+can occur when the target server principal name (SPN) is registered on an
+account other than the account the target service is using. Ensure that the
+target SPN is only registered on the account used by the server. <span
+style='background:yellow'>This error can also happen if the target service
+account password is different than what is configured on the Kerberos Key
+Distribution Center for that target service.</span> Ensure that the service on
+the server and the KDC are both configured to use the same password. If the
+server name is not fully qualified, and the target domain (ROOT.CONTOSO.COM) is
+different from the client domain (ROOT.CONTOSO.COM), check if there are
+identically named server accounts in these two domains, or use the
+fully-qualified name to identify the server.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<h4>Ashley McGlone's PowerShell script to dump pwd version from DCs</h4>
+
+<p class=MsoNormal>This can be leveraged in a larger environment where you want
+to see which KDCs have an old computer account password for a given DC. </p>
+
+<p class=MsoNormal>The PowerShell scriptlet does the following:</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Query
+DCs in the domain</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Outputs
+a list of DCs and asks you to select the one you want to obtain replication
+metadata for</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Returns
+the version number of the dBCSPwd attribute from all DCs in that domain</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p class=PowerShell>$report = @()</p>
+
+<p class=PowerShell>$DCs = Get-ADDomainController -Filter *</p>
+
+<p class=PowerShell>$DCQuery = $DCs | Select-Object HostName, IPv4Address,
+Site, OperatingSystem, OperationMasterRoles, ComputerObjectDN | Out-Gridview
+-Title &quot;Select the DCs to query&quot; -PassThru | Select-Object
+-ExpandProperty ComputerObjectDN&nbsp;&nbsp;</p>
+
+<p class=PowerShell>ForEach ($DC in $DCs) {$report +=
+Get-ADReplicationAttributeMetadata -Object $DCQuery -Server $DC.HostName |
+Where-Object {$_.AttributeName -eq 'dBCSPwd'}}</p>
+
+<p class=PowerShell>$report | ogv </p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:9.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<h3>Exercise 3: Could not find the domain controller for this domain 1908</h3>
+
+<table class=NotesTable border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width="17%" nowrap valign=top style='width:17.0%;border:solid white 1.0pt;
+  padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourseLabel style='line-height:normal'><img width=24 height=24
+  id="Picture 226" src="EMSHOL308_Appendix_files/image003.png"> More:</p>
+  </td>
+  <td width="83%" valign=top style='width:83.0%;border:solid white 1.0pt;
+  border-left:none;background:#BAFFBA;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourse>For more information, see:</p>
+  <p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:10.5pt'>Troubleshooting AD Replication error 1908: Could not
+  find the domain controller for this domain.</span></p>
+  <p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+  style='font-size:10.5pt'>http://support.microsoft.com/kb/2712026</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNoSpacing>&nbsp;</p>
+
+<h4>Answers</h4>
+
+<p class=MsoBodyText><b>&nbsp;</b></p>
+
+<p class=MsoBodyText><b>How do the domain controllers in root.contoso.com
+resolve names for the child domain?</b></p>
+
+<p class=MsoBodyText style='text-indent:.25in'>Via DNS delegation - the Child
+domain zone is delegated to a different DNS server</p>
+
+<p class=MsoBodyText><b>Are there any failures reported for the DCDIAG DNS
+delegation test?</b></p>
+
+<p class=MsoBodyText style='text-indent:.25in'>Yes:</p>
+
+<p class=MsoList2>DC1</p>
+
+<p class=MsoList2><span style='font-family:Consolas'>TEST: Delegations (Del)</span></p>
+
+<p class=MsoList2><span style='font-family:Consolas'>                  Error:
+DNS server: lamedc1.child.contoso.com. IP:192.168.10.1</span></p>
+
+<p class=MsoList2><span style='font-family:Consolas'>                  [Broken
+delegated domain child.root.contoso.com.]</span></p>
+
+<p class=MsoBodyText><b>Does a server named lamedc1.child.contoso.com server
+exists that hosts the child.root.contoso.com DNS zone?</b></p>
+
+<p class=MsoBodyText style='text-indent:.25in'>No.  Also, the IP address
+192.168.10.1 belongs to DC1.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText><b>What is the cause of the failure to locate a KDC in the
+child domain?</b></p>
+
+<p class=MsoBodyText style='text-indent:.25in'>Netlogon attempts to locate a
+KDC by querying a KDC SRV DNS record.  Netlogon fails to get a response to this
+DNS query.  Ultimately this is caused by a broken DNS delegation.</p>
+
+<h4>Log output</h4>
+
+<p class=MsoBodyText><b>nltest /dsgetdc:child /kdc</b></p>
+
+<p class=MsoBodyText>Getting DC name failed: Status = 1355 0x54b
+ERROR_NO_SUCH_DOMAIN</p>
+
+<p class=MsoBodyText><b>Netlogon.log</b></p>
+
+<p class=MsoList2>12/18 11:05:59 [MISC] [1856] ROOT: DsGetDcName function
+called: client PID=-1, Dom:CHILD.ROOT.CONTOSO.COM Acct:(null) Flags: IP KDC </p>
+
+<p class=MsoList2>12/18 11:05:59 [MISC] [1856] NetpDcInitializeContext:
+DSGETDC_VALID_FLAGS is c07ffff1</p>
+
+<p class=MsoList2>12/18 11:05:59 [MAILSLOT] [1856] Received ping from
+DC1(DC1.root.contoso.com) CHILD.ROOT.CONTOSO.COM (null) on &lt;Local&gt;</p>
+
+<p class=MsoList2>12/18 11:05:59 [CRITICAL] [1856] Ping from DC1 for domain
+CHILD.ROOT.CONTOSO.COM (null) for (null) on &lt;Local&gt; is invalid since we
+don't host the named domain.</p>
+
+<p class=MsoList2>12/18 11:06:06 [MISC] [624] ROOT: DsGetDcName function
+called: client PID=-1, Dom:CHILD.ROOT.CONTOSO.COM Acct:(null) Flags: IP KDC </p>
+
+<p class=MsoList2>12/18 11:06:06 [MISC] [624] NetpDcInitializeContext:
+DSGETDC_VALID_FLAGS is c07ffff1</p>
+
+<p class=MsoList2>12/18 11:06:06 [MAILSLOT] [624] Received ping from
+DC1(DC1.root.contoso.com) CHILD.ROOT.CONTOSO.COM (null) on &lt;Local&gt;</p>
+
+<p class=MsoList2>12/18 11:06:06 [CRITICAL] [624] Ping from DC1 for domain
+CHILD.ROOT.CONTOSO.COM (null) for (null) on &lt;Local&gt; is invalid since we
+don't host the named domain.</p>
+
+<p class=MsoList2>12/18 11:06:08 [CRITICAL] [1856] NetpDcGetDcNext:
+_kerberos._tcp.Boulder._sites.dc._msdcs.CHILD.ROOT.CONTOSO.COM.: Cannot Query DNS.
+9002 0x232a</p>
+
+<p class=MsoList2>12/18 11:06:08 [CRITICAL] [1856] NetpDcGetNameIp:
+CHILD.ROOT.CONTOSO.COM: No data returned from DnsQuery.</p>
+
+<p class=MsoList2>12/18 11:06:08 [MISC] [1856] NetpDcGetName: NetpDcGetNameIp
+for CHILD.ROOT.CONTOSO.COM returned 1355</p>
+
+<p class=MsoList2>12/18 11:06:08 [CRITICAL] [1856] NetpDcGetName:
+CHILD.ROOT.CONTOSO.COM: IP and Netbios are both done.</p>
+
+<p class=MsoList2>12/18 11:06:08 [MISC] [1856] ROOT: DsGetDcName function
+returns 1355 (client PID=-1): Dom:CHILD.ROOT.CONTOSO.COM Acct:(null) Flags: IP
+KDC </p>
+
+<p class=MsoList2>12/18 11:06:08 [CRITICAL] [624] NetpDcGetDcNext:
+_kerberos._tcp.Boulder._sites.dc._msdcs.CHILD.ROOT.CONTOSO.COM.: Cannot Query
+DNS. 9002 0x232a</p>
+
+<p class=MsoList2>12/18 11:06:08 [CRITICAL] [624] NetpDcGetNameIp:
+CHILD.ROOT.CONTOSO.COM: No data returned from DnsQuery.</p>
+
+<p class=MsoList2>12/18 11:06:08 [MISC] [624] NetpDcGetName: NetpDcGetNameIp
+for CHILD.ROOT.CONTOSO.COM returned 1355</p>
+
+<p class=MsoList2>12/18 11:06:08 [CRITICAL] [624] NetpDcGetName:
+CHILD.ROOT.CONTOSO.COM: IP and Netbios are both done.</p>
+
+<p class=MsoList2>12/18 11:06:08 [MISC] [624] ROOT: DsGetDcName function
+returns 1355 (client PID=-1): Dom:CHILD.ROOT.CONTOSO.COM Acct:(null) Flags: IP
+KDC</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText><b>Network trace</b></p>
+
+<p class=MsoBodyText style='margin-top:0in;margin-right:-63.0pt;margin-bottom:
+0in;margin-left:-.75in;margin-bottom:.0001pt;line-height:normal;background:
+#C8F0FF'><span style='font-size:8.0pt'>66     DC1            DC2            DNS:QueryId
+= 0x7A52, QUERY (Standard query), Query  for ChildDC1.child.root.contoso.com of
+type Host Addr on class Internet  …</span></p>
+
+<p class=MsoBodyText style='margin-top:0in;margin-right:-63.0pt;margin-bottom:
+0in;margin-left:-.75in;margin-bottom:.0001pt;line-height:normal;background:
+#C8F0FF'><span style='font-size:8.0pt'>67     DC1            DC2            DNS:QueryId
+= 0x597F, QUERY (Standard query), Query  for <b>_kerberos</b>._tcp.Boulder._sites.dc._msdcs.CHILD.ROOT.CONTOSO.COM
+of type SRV</span></p>
+
+<p class=MsoBodyText style='margin-top:0in;margin-right:-63.0pt;margin-bottom:
+0in;margin-left:-.75in;margin-bottom:.0001pt;line-height:normal;background:
+#C8F0FF'><span style='font-size:8.0pt'>68     DC1            DC2            DNS:QueryId
+= 0x7A52, QUERY (Standard query), Query  for ChildDC1.child.root.contoso.com of
+type Host Addr on class Internet  …</span></p>
+
+<p class=MsoBodyText style='margin-top:0in;margin-right:-63.0pt;margin-bottom:
+0in;margin-left:-.75in;margin-bottom:.0001pt;line-height:normal;background:
+#FFCCCC'><span style='font-size:8.0pt'>71     DC2            DC1            DNS:QueryId
+= 0x597F, QUERY (Standard query), Response - Server failure           {DNS:28,
+UDP:27, IPv4:1}</span></p>
+
+<p class=MsoBodyText style='margin-top:0in;margin-right:-63.0pt;margin-bottom:
+0in;margin-left:-.75in;margin-bottom:.0001pt;line-height:normal;background:
+#C8F0FF'><span style='font-size:8.0pt'>79     DC1            DC2            DNS:QueryId
+= 0x7A52, QUERY (Standard query), Query  for ChildDC1.child.root.contoso.com of
+type Host Addr on class Internet  …</span></p>
+
+<p class=MsoBodyText style='margin-top:0in;margin-right:-63.0pt;margin-bottom:
+0in;margin-left:-.75in;margin-bottom:.0001pt;line-height:normal;background:
+#FFCCCC'><span style='font-size:8.0pt'>84     DC2            DC1            DNS:QueryId
+= 0x7A52, QUERY (Standard query), Response - Server failure           {DNS:32,
+UDP:31, IPv4:1}</span></p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoBodyText><b>Dcdiag /test:dns /dnsdelegation &gt;dnstest.txt</b></p>
+
+<p class=MsoList2>Directory Server Diagnosis</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>Performing initial setup:</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>   Trying to find home server...</p>
+
+<p class=MsoList2>   Home Server = DC1</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>   * Identified AD Forest. </p>
+
+<p class=MsoList2>   Done gathering initial info.</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>Doing initial required tests</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>   Testing server: Boulder\DC1</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>      Starting test: Connectivity</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>         ......................... DC1 passed test
+Connectivity</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>&nbsp;</p>
+
+<p class=MsoList2>&nbsp;</p>
+
+<p class=MsoList2>Doing primary tests</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>   Testing server: Boulder\DC1</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>      Starting test: DNS</p>
+
+<p class=MsoList2>        </p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>         DNS Tests are running and not hung. Please wait a
+few minutes...</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>         ......................... DC1 passed test DNS</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>   Running partition tests on : ForestDnsZones</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>   Running partition tests on : DomainDnsZones</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>   Running partition tests on : Schema</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>   Running partition tests on : Configuration</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>   Running partition tests on : root</p>
+
+<p class=MsoList2>   </p>
+
+<p class=MsoList2>   Running enterprise tests on : root.contoso.com</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>      Starting test: DNS</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>         Test results for domain controllers:</p>
+
+<p class=MsoList2>            </p>
+
+<p class=MsoList2>            DC: DC1.root.contoso.com</p>
+
+<p class=MsoList2>            Domain: root.contoso.com</p>
+
+<p class=MsoList2>          </p>
+
+<p class=MsoList2>                  </p>
+
+<p class=MsoList2>               TEST: Delegations (Del)</p>
+
+<p class=MsoList2>                  Error: DNS server: lamedc1.child.contoso.com.
+IP:192.168.10.1</p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>                  [Broken delegated domain
+child.root.contoso.com.]</p>
+
+<p class=MsoList2>         </p>
+
+<p class=MsoList2>         Summary of test results for DNS servers used by the
+above domain</p>
+
+<p class=MsoList2>         controllers:</p>
+
+<p class=MsoList2>        </p>
+
+<p class=MsoList2></p>
+
+<p class=MsoList2>            DNS server: 192.168.10.1 (lamedc1.child.contoso.com.)</p>
+
+<p class=MsoList2>               1 test failure on this DNS server</p>
+
+<p class=MsoList2>               </p>
+
+<p class=MsoList2>         Summary of DNS test results:</p>
+
+<p class=MsoList2>         </p>
+
+<p class=MsoList2>                                            Auth Basc Forw
+Del  Dyn  RReg Ext</p>
+
+<p class=MsoList2>            _________________________________________________________________</p>
+
+<p class=MsoList2>            Domain: root.contoso.com</p>
+
+<p class=MsoList2>               DC1                          PASS PASS n/a 
+FAIL n/a  n/a  n/a  </p>
+
+<p class=MsoList2>         </p>
+
+<p class=MsoList2>         ......................... root.contoso.com failed
+test DNS</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h3>Exercise 4: Lingering Objects - Insufficient attributes were given to
+create an object - 8606</h3>
+
+<p class=MsoCaption>Table 3: Event 1988 text</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=1262
+ style='width:473.4pt;margin-left:-5.65pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=203 valign=top style='width:76.25pt;border:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Log Name</span></p>
+  </td>
+  <td width=1059 valign=top style='width:397.15pt;border:solid windowtext 1.0pt;
+  border-left:none;background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Directory Service</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=203 valign=top style='width:76.25pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Source</span></p>
+  </td>
+  <td width=1059 valign=top style='width:397.15pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Microsoft-Windows-ActiveDirectory_DomainService</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=203 valign=top style='width:76.25pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Date</span></p>
+  </td>
+  <td width=1059 valign=top style='width:397.15pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>&lt;Date&gt; &lt;Time&gt;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=203 valign=top style='width:76.25pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Event ID</span></p>
+  </td>
+  <td width=1059 valign=top style='width:397.15pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>1988</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=203 valign=top style='width:76.25pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Task Category</span></p>
+  </td>
+  <td width=1059 valign=top style='width:397.15pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Replication</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=203 valign=top style='width:76.25pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Computer</span></p>
+  </td>
+  <td width=1059 valign=top style='width:397.15pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>&lt;computer name&gt;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=203 valign=top style='width:76.25pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>Description</span></p>
+  </td>
+  <td width=1059 valign=top style='width:397.15pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C8F0FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:9.0pt'>&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=1262 colspan=2 valign=top style='width:473.4pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>Active Directory Domain Services Replication
+  encountered the existence of objects in the following partition that have
+  been deleted from the local domain controllers (DCs) Active Directory Domain
+  Services database.  Not all direct or transitive replication partners
+  replicated in the deletion before the tombstone lifetime number of days
+  passed.  Objects that have been deleted and garbage collected from an Active
+  Directory Domain Services partition but still exist in the writable
+  partitions of other DCs in the same domain, or read-only partitions of global
+  catalog servers in other domains in the forest are known as &quot;lingering
+  objects&quot;. </span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>  Source domain controller: </span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>3fe45b7f-e6b1-42b1-bcf4-2561c38cc3a6._msdcs.root.contoso.com
+  </span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>Object: </span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>CN=Frankie Fredrick,OU=Engineering,DC=root,DC=contoso,DC=com
+  </span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>Object GUID: </span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>5ca6ebca-d34c-4f60-b79c-e8bd5af127d8  This event is
+  being logged because the source DC contains a lingering object which does not
+  exist on the local DCs Active Directory Domain Services database.  This replication
+  attempt has been blocked.</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'> </span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'> The best solution to this problem is to identify and
+  remove all lingering objects in the forest.</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>  </span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>User Action:</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'> Remove Lingering Objects:</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>  The action plan to recover from this error can be
+  found at http://support.microsoft.com/?id=314282.</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>  If both the source and destination DCs are Windows
+  Server 2003 DCs, then install the support tools included on the installation
+  CD.  To see which objects would be deleted without actually performing the
+  deletion run &quot;repadmin /removelingeringobjects &lt;Source DC&gt;
+  &lt;Destination DC DSA GUID&gt; &lt;NC&gt; /ADVISORY_MODE&quot;. The event
+  logs on the source DC will enumerate all lingering objects.  To remove
+  lingering objects from a source domain controller run &quot;repadmin /removelingeringobjects
+  &lt;Source DC&gt; &lt;Destination DC DSA GUID&gt; &lt;NC&gt;&quot;.</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>  If either source or destination DC is a Windows
+  2000 Server DC, then more information on how to remove lingering objects on
+  the source DC can be found at http://support.microsoft.com/?id=314282 or from
+  your Microsoft support personnel.</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>  If you need Active Directory Domain Services
+  replication to function immediately at all costs and don't have time to
+  remove lingering objects, enable loose replication consistency by unsetting
+  the following registry key:</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'> Registry Key:</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>HKLM\System\CurrentControlSet\Services\NTDS\Parameters\Strict
+  Replication Consistency</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>  Replication errors between DCs sharing a common
+  partition can prevent user and computer accounts, trust relationships, their
+  passwords, security groups, security group memberships and other Active
+  Directory Domain Services configuration data to vary between DCs, affecting
+  the ability to log on, find objects of interest and perform other critical
+  operations. These inconsistencies are resolved once replication errors are
+  resolved.  DCs that fail to inbound replicate deleted objects within
+  tombstone lifetime number of days will remain inconsistent until lingering
+  objects are manually removed by an administrator from each local DC.</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:9.0pt'>  Lingering objects may be prevented by ensuring that
+  all domain controllers in the forest are running Active Directory Domain
+  Services, are connected by a spanning tree connection topology and perform
+  inbound replication before Tombstone Live number of days pass.</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'>&nbsp;</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNoSpacing>&nbsp;</p>
+
+<h4>Answers</h4>
+
+<p class=MsoBodyText><b>How can you translate the alias provided in the event
+to the host name of the DC?</b></p>
+
+<p class=MsoBodyText style='margin-left:1.0in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Copy
+the alias out of the event (highlight and Ctrl + C)</p>
+
+<p class=MsoBodyText style='margin-left:1.0in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Ping
+3fe45b7f-e6b1-42b1-bcf4-2561c38cc3a6._msdcs.root.contoso.com</p>
+
+<p class=MsoBodyText style='margin-left:.75in'>Other options include: </p>
+
+<p class=MsoBodyText style='margin-left:1.25in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Look at the SRV record in the forest root MSDCS DNS zone
+(_msdcs.root.contoso.com) in the DNS Management snap-in</p>
+
+<p class=MsoBodyText style='margin-left:1.25in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Output repadmin /showrepl * to a text file and match up the GUID
+reported in the event to the DSA object GUID.</p>
+
+<p class=MsoBodyText style='margin-left:1.25in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Use an LDAP query tool (such as Repadmin or PowerShell) to dump
+the ObjectGUID of the NTDS Settings object:</p>
+
+<p class=MsoBodyText><i>Command Prompt:</i></p>
+
+<p class=Code>Repadmin /showattr DC1 &quot;&lt;GUID=3fe45b7f-e6b1-42b1-bcf4-2561c38cc3a6&gt;&quot;
+/atts:DN</p>
+
+<p class=MsoBodyText style='margin-left:1.0in'>Return all DSA objectGUIDs</p>
+
+<p class=Code>Repadmin /showattr DC1 NCOBJ:Config:
+/filter:&quot;(Objectclass=NTDSDSA)&quot; /atts:objectGUID /subtree</p>
+
+<p class=MsoBodyText><b><i>PowerShell:</i></b></p>
+
+<p class=PowerShell>PS C:\&gt;Get-ADObject -Identity 3fe45b7f-e6b1-42b1-bcf4-2561c38cc3a6</p>
+
+<p class=MsoBodyText style='margin-left:1.0in'>Return all DSA objectGUIDs</p>
+
+<p class=PowerShell>PS C:\&gt;Get-ADObject -LDAPFilter
+&quot;(Objectclass=ntdsdsa)&quot; -SearchBase
+&quot;cn=configuration,dc=root,dc=contoso,dc=com&quot; | Out-GridView</p>
+
+<p class=MsoBodyText><b>&nbsp;</b></p>
+
+<p class=MsoBodyText><b>Which DCs return replication metadata for the object?</b></p>
+
+<p class=MsoBodyText style='margin-left:1.0in'> DC2, TRDC1 and ChildDC2</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<h4><a name="_Ref378355259"></a><a name="_Ref377023036">Lingering Object
+discovery</a> and cleanup</h4>
+
+<p class=MsoNormal>Repadmin /removelingeringobjects /advisory_mode is a good
+method to conduct a spot check of lingering objects on an individual DC, per
+partition basis.  </p>
+
+<p class=MsoNormal>However, lingering objects may exist on DCs without any
+noticeable symptoms.  For that reason, checking and cleaning up just the DCs
+that report errors is not a good method to ensure all lingering objects are
+removed from the environment.</p>
+
+<p class=MsoNormal><b>To remove lingering objects</b></p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Determine
+the root cause of the lingering object issue and prevent it from occurring
+again</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Assume
+all DCs contain lingering objects in all partitions and clean up everyone</p>
+
+<p class=MsoNormal>Those that clean up just the source DCs reported with AD
+replication status 8606 usually find they have more objects to clean up later.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>To accomplish the above using repadmin, you need to do the
+following:</p>
+
+<p class=MsoListParagraph style='margin-left:1.25in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Identify
+one DC per partition to use as a reference DC</p>
+
+<p class=MsoListParagraph style='margin-left:1.25in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Clean
+up each DC identified against all other DCs that host a writeable copy of the
+same partition.  This DC is now considered &quot;clean&quot; and suitable to
+use as a reference DC.</p>
+
+<p class=MsoListParagraph style='margin-left:1.25in;text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Clean
+up all other DCs against the reference DCs</p>
+
+<p class=MsoNormal>In the simple, five DC, three domain lab environment, this
+requires 30 separate executions of the repadmin command.  In a real-word
+production environment, the count of repadmin executions is usually in the
+hundreds or thousands.</p>
+
+<table class=NotesTable border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width="17%" nowrap valign=top style='width:17.0%;border:solid white 1.0pt;
+  padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourseLabel style='line-height:normal'><img width=24 height=24
+  id="Picture 30" src="EMSHOL308_Appendix_files/image007.png"> More:</p>
+  </td>
+  <td width="83%" valign=top style='width:83.0%;border:solid white 1.0pt;
+  border-left:none;background:#BAFFBA;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourse>For more information, see:</p>
+  <p class=MsoListParagraph style='margin:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.5pt'>Clean that Active Directory Forest of
+  Lingering Objects<br>
+  </span><span style='font-size:10.5pt'>http://blogs.technet.com/b/glennl/archive/2007/07/26/clean-that-active-directory-forest-of-lingering-objects.aspx</span></p>
+  <p class=NotesCourse>&nbsp;</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNoSpacing>&nbsp;</p>
+
+<p class=MsoNormal>The good news is that repldiag /removelingeringobjects
+automates the above for you and requires just one execution: <b>Repldiag
+/removelingeringobjects</b></p>
+
+<p class=MsoNormal><b>&nbsp;</b></p>
+
+<p class=MsoNormal><b>To prevent their recurrence:</b></p>
+
+<table class=NotesTable border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='width:98.0%;border-collapse:collapse;border:none'>
+ <tr>
+  <td width="17%" nowrap valign=top style='width:17.0%;border:solid white 1.0pt;
+  padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourseLabel style='line-height:normal'><img width=24 height=24
+  id="Picture 37" src="EMSHOL308_Appendix_files/image008.png"> Important:</p>
+  </td>
+  <td width="83%" valign=top style='width:83.0%;border:solid white 1.0pt;
+  border-left:none;background:#BAFFBA;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=MsoListParagraph style='margin-left:.5in;text-indent:-.25in;
+  line-height:normal'><span style='font-size:10.5pt;font-family:Symbol'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>Resolve replication
+  failures within TSL</span></p>
+  <p class=MsoListParagraph style='margin-left:.5in;text-indent:-.25in;
+  line-height:normal'><span style='font-size:10.5pt;font-family:Symbol'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>Ensure Strict
+  Replication Consistency is enabled</span></p>
+  <p class=MsoListParagraph style='margin-left:.5in;text-indent:-.25in;
+  line-height:normal'><span style='font-size:10.5pt;font-family:Symbol'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>Ensure large jumps
+  in system time are blocked via registry key or policy</span></p>
+  <p class=MsoListParagraph style='margin-left:.5in;text-indent:-.25in;
+  line-height:normal'><span style='font-size:10.5pt;font-family:Symbol'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>Don't remove
+  replication quarantine with the &quot;allowDivergent&quot; setting without
+  removing LOs first</span></p>
+  <p class=MsoListParagraph style='margin-left:.5in;text-indent:-.25in;
+  line-height:normal'><span style='font-size:10.5pt;font-family:Symbol'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>Don't restore
+  system backups that are near TSL number of days old</span></p>
+  <p class=MsoListParagraph style='margin-left:.5in;text-indent:-.25in;
+  line-height:normal'><span style='font-size:10.5pt;font-family:Symbol'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>Don't bring DCs
+  back online that haven't replicated within TSL</span></p>
+  <p class=MsoListParagraph style='margin-left:.5in;text-indent:-.25in;
+  line-height:normal'><span style='font-size:10.5pt;font-family:Symbol'>·<span
+  style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+  style='font-size:10.5pt;font-family:"Calibri",sans-serif'>Do not allow a
+  server to replicate that has experienced a USN rollback</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNoSpacing>&nbsp;</p>
+
+<h4><a name="_Ref377388861">Lingering Object </a>Job Aid</h4>
+
+<h5><a name="_Ref377393068">Lingering Object Glossary</a></h5>
+
+<p class=MsoCaption style='margin-left:.5in'>Table 4 Lingering Object glossary</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=1247
+ style='width:467.5pt;margin-left:30.35pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=623 style='width:233.6pt;border:solid windowtext 1.0pt;background:
+  #B6B6FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:11.0pt'>Term</span></b></p>
+  </td>
+  <td width=624 style='width:233.9pt;border:solid windowtext 1.0pt;border-left:
+  none;background:#B6B6FF;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:11.0pt'>Definition</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 valign=top style='width:233.6pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:10.0pt'>Abandoned delete</span></b></p>
+  </td>
+  <td width=624 valign=top style='width:233.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><span style='font-size:10.0pt'>An object deleted on one DC
+  that never was replicated to other DCs hosting a writable copy of the NC for
+  that object.  The deletion replicates to DCs/GCs hosting a read-only copy of
+  the NC. The DC that originated the object deletion goes offline prior to
+  replicating the change to other DCs hosting a writable copy of the partition.
+  </span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 valign=top style='width:233.6pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:10.0pt'>Abandoned object</span></b></p>
+  <p class=TableText><span style='font-size:10.0pt'>&nbsp;</span></p>
+  </td>
+  <td width=624 valign=top style='width:233.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><span style='font-size:10.0pt'>An object created on one DC
+  that never got replicated to other DCs hosting a writable copy of the NC but
+  does get replicated to DCs/GCs hosting a read-only copy of the NC. The
+  originating DC goes offline prior to replicating the originating write to
+  other DCs that contain a writable copy of the partition.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 valign=top style='width:233.6pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:10.0pt'>Lingering link</span></b></p>
+  <p class=TableText><span style='font-size:10.0pt'>&nbsp;</span></p>
+  </td>
+  <td width=624 valign=top style='width:233.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><span style='font-size:10.0pt'>A linked attribute contains
+  the DN of an object that no longer exists in Active Directory.  These stale
+  references are referred to as lingering links.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 valign=top style='width:233.6pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:10.0pt'>Lingering Object</span></b></p>
+  <p class=TableText><span style='font-size:10.0pt'>&nbsp;</span></p>
+  </td>
+  <td width=624 valign=top style='width:233.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><span style='font-size:10.0pt'>An object that is present
+  on one replica, but has been deleted and garbage collected on another
+  replica.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 valign=top style='width:233.6pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:10.0pt'>Loose Replication
+  Consistency</span></b></p>
+  </td>
+  <td width=624 valign=top style='width:233.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><span style='font-size:10.0pt'>With this behavior enabled,
+  if a destination DC receives a change to an attribute for an object that it
+  does not have, the entire object is replicated to the target for the sake of
+  replication consistency.  This undesirable behavior causes a lingering object
+  to be “reanimated.”</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 valign=top style='width:233.6pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:10.0pt'>Strict Replication
+  Consistency</span></b></p>
+  </td>
+  <td width=624 valign=top style='width:233.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><span style='font-size:10.0pt'>With this behavior enabled,
+  if a destination DC receives a change to an attribute for an object that it
+  does not have, replication is blocked with the source DC for the partition
+  where the lingering object was detected</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 valign=top style='width:233.6pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:10.0pt'>Tombstone</span></b></p>
+  </td>
+  <td width=624 valign=top style='width:233.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><span style='font-size:10.0pt'>An object that has been
+  deleted but not yet garbage collected</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=623 valign=top style='width:233.6pt;border:solid windowtext 1.0pt;
+  border-top:none;background:#F2F2F2;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><b><span style='font-size:10.0pt'>Tombstone Lifetime (TSL)</span></b></p>
+  <p class=TableText><span style='font-size:10.0pt'>&nbsp;</span></p>
+  </td>
+  <td width=624 valign=top style='width:233.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=TableText><span style='font-size:10.0pt'>The amount of time
+  tombstones are retained in Active Directory before being garbage collected
+  and permanently purged from the database.</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<table class=LessonTable border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='margin-left:.1in;border-collapse:collapse;border:none'>
+ <thead>
+  <tr style='page-break-inside:avoid'>
+   <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+   background:#B6B6FF;padding:.05in 4.3pt .7pt 4.3pt'>
+   <p class=TableText><b>Term</b></p>
+   </td>
+   <td width=588 valign=top style='width:220.5pt;border:solid #00A600 1.0pt;
+   border-left:none;background:#B6B6FF;padding:.05in 4.3pt .7pt 4.3pt'>
+   <p class=TableText><b>Description</b></p>
+   </td>
+   <td width=455 valign=top style='width:170.75pt;border:solid #00A600 1.0pt;
+   border-left:none;background:#B6B6FF;padding:.05in 4.3pt .7pt 4.3pt'>
+   <p class=TableText><b>Notes</b></p>
+   </td>
+  </tr>
+ </thead>
+ <tr style='page-break-inside:avoid'>
+  <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText><span style='font-size:11.0pt;color:#00006D'>Deleted
+  object</span></p>
+  </td>
+  <td width=588 valign=top style='width:220.5pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>When AD recycle bin is enabled, an object that is deleted
+  (deleted object) is recoverable with a full set of attributes using a
+  PowerShell command (2008 R2) or via PowerShell and a GUI- based tool (ADAC)
+  in Windows Server 2012).  The object remains in this state until the <b>deleted
+  object lifetime</b> expires and then it becomes a <b>recycled object</b>.</p>
+  </td>
+  <td width=455 valign=top style='width:170.75pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:10.0pt'>IsDeleted = True</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:10.0pt'>IsRecycled = &lt;not set&gt;</span></p>
+  <p class=TableText><span style='font-size:10.0pt'>Stored in the <b>Deleted
+  Objects</b> container in most instances (some objects do not get moved on
+  deletion).</span></p>
+  <p class=TableText>&nbsp;</p>
+  <p class=TableText>&nbsp;</p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Deleted object lifetime</p>
+  </td>
+  <td width=588 valign=top style='width:220.5pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>The deleted object lifetime is determined by the value of
+  the <b>msDS-deletedObjectLifetime</b> attribute. </p>
+  <p class=TableText style='margin-left:.25in;text-indent:-.25in;line-height:
+  115%'><span style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span></span>By default, tombstoneLifetime is set to null. When tombstoneLifetime
+  is set to null, the tombstone lifetime defaults to 60 days (hard-coded in the
+  system). </p>
+  <p class=TableText style='margin-left:.25in;text-indent:-.25in;line-height:
+  115%'><span style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span></span>By default, msDS-deletedObjectLifetime is also set to null.
+  When msDS-deletedObjectLifetime is set to null, the deleted object lifetime
+  is set to the value of the tombstone lifetime.</p>
+  <p class=TableText style='margin-left:.25in;text-indent:-.25in;line-height:
+  115%'><span style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span></span>If msDS-deletedObjectLifetime is manually set, it becomes the
+  effective lifetime of a system state backup.</p>
+  </td>
+  <td width=455 valign=top style='width:170.75pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText><span style='font-size:10.0pt'>CN=Directory
+  Service,CN=Windows
+  NT,CN=Services,CN=Configuration,DC=&lt;mydomain&gt;,DC=&lt;com&gt;</span></p>
+  <p class=TableText><span style='font-size:10.0pt'>Attribute: <b>msDS-deletedObjectLifetime</b></span></p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Garbage Collection</p>
+  </td>
+  <td width=588 valign=top style='width:220.5pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>A process that permanently deletes tombstone objects or
+  recycled objects</p>
+  <p class=TableText style='margin-left:.5in;text-indent:-.25in;line-height:
+  115%'><span style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span></span>runs on DCs every 12 hours by default / 15 minutes after
+  restart</p>
+  <p class=TableText>Can be manually initiated with LDP or other LDAP tool</p>
+  </td>
+  <td width=455 valign=top style='width:170.75pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=Code>Repadmin /setattr &quot;&quot; &quot;&quot; doGarbageCollection
+  add 1&quot;</p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Offline defrag</p>
+  </td>
+  <td width=588 valign=top style='width:220.5pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Invokes Esentutl.exe to compact the existing AD database
+  and writes the compacted file to the specified directory.</p>
+  </td>
+  <td width=455 valign=top style='width:170.75pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:10.0pt'>Access in DS restore mode:</span></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:10.0pt'>Ntdsutil / act in ntds / files / compact to c:\temp</span></p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Semantic Database Analysis</p>
+  </td>
+  <td width=588 valign=top style='width:220.5pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Verifies the integrity of Active Directory  database files
+  with respect to Active Directory semantics</p>
+  </td>
+  <td width=455 valign=top style='width:170.75pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:10.0pt'>Access in DS restore mode:</span></p>
+  <p class=MsoNormal style='line-height:normal'><span style='font-size:10.5pt'>Ntdsutil
+  / act in ntds / sem da an / go</span></p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Recycled object</p>
+  </td>
+  <td width=588 valign=top style='width:220.5pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>After a deleted object lifetime expires, the logically
+  deleted object is turned into a recycled object and most of its attributes
+  are stripped away.</p>
+  </td>
+  <td width=455 valign=top style='width:170.75pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><span
+  style='font-size:10.0pt'>IsDeleted = True</span></p>
+  <p class=TableText><span style='font-size:10.0pt'>IsRecycled = True</span></p>
+  <p class=TableText><span style='font-size:10.0pt'>Can only be recovered if <i>toggle
+  recycled objects</i> flag is used during the authoritative restore process.</span></p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText><span style='font-size:11.0pt;color:#00006D'>Tombstone</span></p>
+  </td>
+  <td width=588 valign=top style='width:220.5pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>Generically, this is an object that has been deleted but
+  not garbage collected.   Prior to the introduction of the AD recycle bin,
+  this is the term for a deleted object.  </p>
+  <p class=TableText><b>If AD recycle bin is enabled:</b></p>
+  <p class=TableText>An object that is deleted retains all of its attribute
+  values and does not become a recycled object until the <b>deleted object
+  lifetime</b> expires.</p>
+  <p class=TableText><b>If AD recycle bin is not enabled:</b></p>
+  <p class=TableText>A deleted object immediately becomes a tombstone and is
+  stripped of most attribute values. </p>
+  <p class=TableText>To recover a tombstone with a full set of attributes, you
+  must perform an authoritative restore.</p>
+  </td>
+  <td width=455 valign=top style='width:170.75pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><b>If AD
+  recycle bin is not enabled:</b></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>IsDeleted
+  = True</p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>IsRecycled
+  = True</p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>&nbsp;</p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><b>If AD
+  recycle bin is enabled and the object is within the deleted object lifetime:</b></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>IsDeleted=True</p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>IsRecycled=not
+  set</p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>&nbsp;</p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'><b>If AD
+  recycle bin is enabled and the object is now a recycled object:</b></p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>IsDeleted=True</p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>IsRecycled=True</p>
+  <p class=TableText style='margin-bottom:0in;margin-bottom:.0001pt'>&nbsp;</p>
+  </td>
+ </tr>
+ <tr style='page-break-inside:avoid'>
+  <td width=208 valign=top style='width:78.1pt;border:solid #00A600 1.0pt;
+  border-top:none;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText><span style='font-size:11.0pt;color:#00006D'>Tombstone
+  Lifetime (TSL)</span></p>
+  </td>
+  <td width=588 valign=top style='width:220.5pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=TableText>The number of days before tombstones or recycled objects
+  are eligible for garbage collection.  </p>
+  <p class=TableText>By default, tombstoneLifetime is set to null. When
+  tombstoneLifetime is set to null, the tombstone lifetime defaults to 60 days
+  (hard-coded in the system). </p>
+  <p class=TableText>&nbsp;</p>
+  <p class=TableText>This is also the effective lifetime of a system state
+  backup.  If msDS-deletedObjectLifetime is manually set, it becomes the
+  effective lifetime of a system state backup.</p>
+  </td>
+  <td width=455 valign=top style='width:170.75pt;border-top:none;border-left:
+  none;border-bottom:solid #00A600 1.0pt;border-right:solid #00A600 1.0pt;
+  background:white;padding:.05in 4.3pt .7pt 4.3pt'>
+  <p class=MsoNormal style='margin-left:.2pt;line-height:normal'><span
+  style='font-size:10.5pt'>CN=Directory Service,CN=Windows
+  NT,CN=Services,CN=Configuration,DC=&lt;mydomain&gt;,DC=&lt;com&gt;</span></p>
+  <p class=TableText><span style='font-size:10.0pt'>Attribute:
+  tombstoneLifetime</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<h5><a name="_Toc311036312">Replication Consistency Settings</a></h5>
+
+<h6><a name="_Ref377395074">Strict Replication Consistency</a></h6>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Defines how a destination DC behaves if a source DC sends updates
+to an object that does not exist in the destination DC’s local copy of Active
+Directory. </p>
+
+<p class=MsoListParagraph style='margin-left:1.5in;text-indent:-.25in'><span
+style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span>Destination DCs should see USN for creates before object is
+modified </p>
+
+<p class=MsoListParagraph style='margin-left:1.5in;text-indent:-.25in'><span
+style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span>Only modifies for lingering objects arrive for object not on
+destination DC </p>
+
+<p class=MsoListParagraph style='margin-left:1.5in;text-indent:-.25in'><span
+style='font-family:"Courier New"'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span>Only destination DC’s enforce strict replication and log events</p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Destination DCs stop replicating from source DC’s partitions
+containing LO’s </p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Lingering objects are quarantined on source DCs where they can be
+detected </p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>End-to-end replication may be impacted for partitions containing
+lingering objects </p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Administrators must remove lingering objects to restore
+replication</p>
+
+<h6>Enabling Strict Replication</h6>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:6.0pt;
+margin-left:.3in'><span style='line-height:115%'>Use Repadmin from Window
+Server 2003 SP1 or later to set strict replication via command prompt:</span></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>For all domain controllers, type:<br>
+<span style='background:#F2F2F2'>repadmin /regkey * +strict</span></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>For all global catalog servers, type:<br>
+<span style='background:#F2F2F2'>repadmin /regkey gc: +strict</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:6.0pt;
+margin-left:.3in'><span style='line-height:115%'>You can also enable strict
+replication by manually setting the <b>Strict Replication Consistency</b> registry
+value to <b>1</b>.</span></p>
+
+<p class=Code><b>Key:</b> HKLM\System\CurrentControlSet\Services\NTDS\Parameter
+</p>
+
+<p class=Code><b>Value:</b> Strict Replication Consistency </p>
+
+<p class=Code><b>Type:</b> (Reg_DWORD) </p>
+
+<p class=Code>Value Data: 1 </p>
+
+<p class=Code>&nbsp;</p>
+
+<p class=Code>1(enabled): Inbound replication of the specified directory
+partition from the source is stopped on the destination.</p>
+
+<table class=NotesTable1 border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='width:98.0%;border-collapse:collapse;border:none'>
+ <tr>
+  <td width="17%" nowrap valign=top style='width:17.0%;border:solid white 1.0pt;
+  padding:5.75pt 4.3pt 5.75pt 4.3pt;text-fit:100%'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:3.0pt;
+  margin-left:0in;line-height:normal'><b><span style='font-size:10.0pt;
+  font-family:"Calibri",sans-serif'><img width=24 height=22 id="Picture 18"
+  src="EMSHOL308_Appendix_files/image009.png"></span></b><b><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'> Warning:</span></b><b><span
+  style='font-family:"Calibri",sans-serif'> </span></b></p>
+  </td>
+  <td width="83%" valign=top style='width:83.0%;border:solid white 1.0pt;
+  border-left:none;background:#DBE5F1;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:3.0pt;
+  margin-left:0in;line-height:normal'><span style='font-size:10.0pt;font-family:
+  "Calibri",sans-serif'>Ensure you are prepared to deal with replication
+  failures after enabling strict replication consistency due to the existence
+  of lingering objects. </span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:0in;
+margin-left:.3in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-size:10.0pt'>&nbsp;</span></p>
+
+<h6>Loose Replication Consistency</h6>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:6.0pt;
+margin-left:.3in'><span style='line-height:115%'>If you enable Loose
+Replication Consistency, if a destination receives a change to an object that
+it does not have, the entire object is replicated to the target for the sake of
+replication consistency. This behavior causes a lingering object to be
+reapplied to all domain controllers in the replication topology.</span></p>
+
+<h6>Enable Loose Replication</h6>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:6.0pt;
+margin-left:.3in'><span style='line-height:115%'>Use Repadmin (from Window
+Server 2003 SP1 or later) to set strict replication via command prompt:</span></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>For all domain controllers, type: <br>
+<span style='background:#F2F2F2'>repadmin /regkey * -strict</span></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>For all global catalog servers, type: <br>
+<span style='background:#F2F2F2'>repadmin /regkey gc: -strict</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:6.0pt;
+margin-left:.3in'><span style='line-height:115%'>You can also enable strict
+replication by manually setting the <b>Strict Replication Consistency</b>
+registry value to <b>0</b>.</span></p>
+
+<p class=MsoNormalCxSpMiddle style='margin-top:4.0pt;margin-right:.1in;
+margin-bottom:10.0pt;margin-left:.3in;line-height:normal;background:#F2F2F2'><b><span
+style='font-size:10.0pt;font-family:Consolas'>Key:</span></b><span
+style='font-size:10.0pt;font-family:Consolas'> HKLM\System\CurrentControlSet\Services\NTDS\Parameters</span></p>
+
+<p class=MsoNormalCxSpMiddle style='margin-top:4.0pt;margin-right:.1in;
+margin-bottom:10.0pt;margin-left:.3in;line-height:normal;background:#F2F2F2'><b><span
+style='font-size:10.0pt;font-family:Consolas'>Value:</span></b><span
+style='font-size:10.0pt;font-family:Consolas'> Strict Replication Consistency </span></p>
+
+<p class=MsoNormalCxSpMiddle style='margin-top:4.0pt;margin-right:.1in;
+margin-bottom:10.0pt;margin-left:.3in;line-height:normal;background:#F2F2F2'><b><span
+style='font-size:10.0pt;font-family:Consolas'>Type:</span></b><span
+style='font-size:10.0pt;font-family:Consolas'> (Reg_DWORD) </span></p>
+
+<p class=MsoNormalCxSpMiddle style='margin-top:4.0pt;margin-right:.1in;
+margin-bottom:10.0pt;margin-left:.3in;line-height:normal;background:#F2F2F2'><b><span
+style='font-size:10.0pt;font-family:Consolas'>Value Data:</span></b><span
+style='font-size:10.0pt;font-family:Consolas'> 0</span></p>
+
+<p class=MsoNormalCxSpMiddle style='margin-top:4.0pt;margin-right:.1in;
+margin-bottom:10.0pt;margin-left:.3in;line-height:normal;background:#F2F2F2'><span
+style='font-size:10.0pt;font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormalCxSpMiddle style='margin-top:4.0pt;margin-right:.1in;
+margin-bottom:10.0pt;margin-left:.3in;line-height:normal;background:#F2F2F2'><span
+style='font-size:10.0pt;font-family:Consolas'>0 (disabled): The destination
+requests the full object from the source domain controller, and the lingering
+object is revived in the directory.</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<table class=NotesTable1 border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='width:98.0%;border-collapse:collapse;border:none'>
+ <tr>
+  <td width="17%" nowrap valign=top style='width:17.0%;border:solid white 1.0pt;
+  background:white;padding:5.75pt 4.3pt 5.75pt 4.3pt;text-fit:100%'><b><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'><br clear=all
+  style='page-break-before:always'>
+  </span></b>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:3.0pt;
+  margin-left:0in;line-height:normal'><b><span style='font-size:10.0pt;
+  font-family:"Calibri",sans-serif;position:relative;top:3.0pt;background:white'><img
+  width=23 height=23 id="Picture 14" src="EMSHOL308_Appendix_files/image010.png"></span></b><b><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif;background:white'> Critical:</span></b></p>
+  </td>
+  <td width="83%" valign=top style='width:83.0%;border:solid white 1.0pt;
+  border-left:none;background:#DBE5F1;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:3.0pt;
+  margin-left:0in;line-height:normal'><span style='font-size:10.0pt;font-family:
+  "Calibri",sans-serif'>The Loose Replication Consistency setting will cause
+  the undesirable behavior of reanimation of lingering objects.</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:0in;
+margin-left:.3in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-size:10.0pt'>&nbsp;</span></p>
+
+<h6>Default Settings for Strict Replication Consistency</h6>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:6.0pt;
+margin-left:.3in'><span style='line-height:115%'>The default value for the
+strict replication consistency registry entry is determined by the conditions
+under which the domain controller was installed into the forest.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:6.0pt;
+margin-left:.3in'><b><span style='line-height:115%'>Note: </span></b><span
+style='line-height:115%'>Raising the domain or forest functional level does not
+change the replication consistency setting on any domain controller.</span></p>
+
+<table class=LightList-Accent11 border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=426 valign=top style='width:159.6pt;border-top:solid #4F81BD 1.0pt;
+  border-left:solid #4F81BD 1.0pt;border-bottom:none;border-right:none;
+  background:#4F81BD;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b><span style='color:white'>Upgrade
+  Path</span></b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:none;border-top:solid #4F81BD 1.0pt;
+  background:#4F81BD;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b><span style='color:white'>Default</span></b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:none;border-right:solid #4F81BD 1.0pt;
+  background:#4F81BD;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b><span style='color:white'>Notes</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=426 valign=top style='width:159.6pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows NT 4.0</b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Loose</p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:solid #4F81BD 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>&nbsp;</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=426 valign=top style='width:159.6pt;border:none;border-left:solid #4F81BD 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows 2000 RTM Root</b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Loose</p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:none;border-right:solid #4F81BD 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>A post-SP2 NTDSA.DLL defaulted to
+  strict replication consistency but was quickly recalled. Windows 2000
+  Services 1 through 4 all default to loose replication consistency.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=426 valign=top style='width:159.6pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows NT 4.0 to Windows 2000
+  Root</b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Loose</p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:solid #4F81BD 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>&nbsp;</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=426 valign=top style='width:159.6pt;border:none;border-left:solid #4F81BD 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows 2000 to Windows Server
+  2003 SP1</b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Loose</p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:none;border-right:solid #4F81BD 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Upgrading a Windows 2000 forest to
+  Windows Server 2003 slipstreamed with SP1 does not enabled strict replication
+  consistency.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=426 valign=top style='width:159.6pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows Server 2003 RTM Root</b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Strict</p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:solid #4F81BD 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>DCPROMO creates an operational GUID
+  that causes Windows Server 2003 domain controllers to inherit strict
+  replication mode but is ignored by Windows 2000 domain controllers.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=426 valign=top style='width:159.6pt;border:none;border-left:solid #4F81BD 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows Server 2003 SP1 root and
+  later:</b></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows Server 2003 R2</b></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows Server 2008</b></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows Server 2008 R2</b></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows Server 2012</b></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows Server 2012 R2</b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Strict</p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:none;border-right:solid #4F81BD 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Same as above.</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=426 valign=top style='width:159.6pt;border:solid #4F81BD 1.0pt;
+  border-right:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'><b>Windows NT 4.0 to Windows Server
+  2003 root</b></p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border-top:solid #4F81BD 1.0pt;
+  border-left:none;border-bottom:solid #4F81BD 1.0pt;border-right:none;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>Strict</p>
+  </td>
+  <td width=426 valign=top style='width:159.6pt;border:solid #4F81BD 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:
+  6.0pt;margin-left:0in;line-height:normal'>DCPROMO creates an operational GUID
+  that causes Windows Server 2003 domain controllers to inherit strict
+  replication mode but is ignored by Windows 2000 domain controllers.</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:6.0pt;
+margin-left:.3in'><span style='line-height:115%'>&nbsp;</span></p>
+
+<table class=NotesTable1 border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width="23%" nowrap valign=top style='width:23.56%;border:solid white 1.0pt;
+  background:white;padding:5.75pt 4.3pt 5.75pt 4.3pt;text-fit:100%'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:3.0pt;
+  margin-left:0in;line-height:normal'><b><span style='font-size:10.0pt;
+  font-family:"Calibri",sans-serif'><img width=24 height=22 id="Picture 15"
+  src="EMSHOL308_Appendix_files/image011.png"></span></b><b><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'> More Information: </span></b></p>
+  </td>
+  <td width="76%" valign=top style='width:76.44%;border:solid white 1.0pt;
+  border-left:none;background:#DBE5F1;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:3.0pt;
+  margin-left:0in;line-height:normal'><span style='font-size:10.0pt;font-family:
+  "Calibri",sans-serif'>For more information about this topic, see:</span></p>
+  <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:3.0pt;
+  margin-left:0in;line-height:normal'><span style='font-size:10.0pt;font-family:
+  "Calibri",sans-serif'>     </span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:0in;
+margin-left:.3in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-size:10.0pt'>&nbsp;</span></p>
+
+<h5>Repadmin RLO example usage</h5>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>The command's syntax is:</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>repadmin /removelingeringobjects <i>LingeringDC
+</i>&nbsp;<i>ReferenceDC_DSA_GUID </i>&nbsp;<i>Partition</i></span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>Where:</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><b><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>LingeringDC:</span></b><span
+style='font-size:9.0pt;font-family:"Calibri",sans-serif'>&nbsp; FQDN of DC that
+has the lingering objects</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><b><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>ReferenceDC_DSA_GUID:</span></b><span
+style='font-size:9.0pt;font-family:"Calibri",sans-serif'>&nbsp; The DSA GUID of
+a domain controller that hosts a writeable copy of the partition</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><b><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>Partition:</span></b><span style='font-size:
+9.0pt;font-family:"Calibri",sans-serif'> The distinguished name of the
+directory partition where the lingering objects exist</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>So for example:</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>We have a server named <b>DC1.contoso.com</b>
+that contains lingering objects.&nbsp; We know that the lingering object is in
+the <b>childdomain.contoso.com</b> partition.&nbsp; We know that <b>DC3.childdomain.contoso.com</b>
+hosts a writeable copy of the partition and doesn't contain any lingering
+objects.</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>We need to find the DSA GUID of DC3 is, so we
+run: repadmin /showrepl DC3.childdomain.contoso.com</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>At the top of the output, locate the DC
+Object GUID entry.&nbsp; This is the GUID you need to enter in the command for
+the reference DC.</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>The command would be</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p style='margin-left:.1in;background:#F2F2F2'><span style='font-size:9.0pt;
+font-family:"Calibri",sans-serif'>repadmin /removelingeringobjects
+DC1.contoso.com &nbsp;5ed02b33-a6ab-4576-b109-bb688221e6e3&nbsp; dc=childdomain,dc=contoso,dc=com</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:.1in;margin-bottom:0in;
+margin-left:.3in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-size:10.0pt'>&nbsp;</span></p>
+
+<h5><a name="_Toc311036317">Repldiag quick reference</a></h5>
+
+<p class=MsoNormal>Removing lingering objects from a forest with repldiag is as
+simple as running repldiag /removelingeringobjects.  However, it is usually
+best to exercise some control over the process in larger environments.  The
+option /OverRideReferenceDC allows you to select which DC to use for cleanup. 
+The option /outputrepadmincommandlinesyntax allows you to see what a
+forest-wide cleanup looks like using repadmin.</p>
+
+<p class=MsoHeading7>Repldiag /removelingeringobjects /outputrepadmincommandlinesyntax</p>
+
+<p class=MsoNormal>This will give you output of corresponding repadmin
+/removelingeringobjects syntax.  View the output to get an understanding of the
+steps repldiag uses holistically remove lingering objects</p>
+
+<p class=MsoListParagraph style='margin-left:1.25in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>It
+first selects one DC per partition to use as a reference DC. </p>
+
+<table class=NotesTable border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width="17%" nowrap valign=top style='width:17.0%;border:solid white 1.0pt;
+  padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourseLabel style='line-height:normal'><img width=24 height=24
+  id="Picture 227" src="EMSHOL308_Appendix_files/image012.png"> From the
+  developer:</p>
+  </td>
+  <td width="83%" valign=top style='width:83.0%;border:solid white 1.0pt;
+  border-left:none;background:#BAFFBA;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourse><b>Reference DC selection:<br>
+  </b>&quot;It is based on the DC with the highest number of link objects on a
+  per partition basis.  The assumption is that this is a hub/well connected
+  system.  This may also select a multiple “reference” DCs according to each
+  partition.&quot; - Ken Brumfield</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNoSpacing>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:1.25in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>It
+then cleans the reference DCs up against all other DCs for the partition(s) they
+were selected as a reference for.  </p>
+
+<p class=MsoListParagraph style='margin-left:1.25in;text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Finally,
+it cleans up all other DCs in the forest with the new “cleaned up” reference
+DCs as sources.  </p>
+
+<p class=MsoNormal>The /outputrepadmincommandlinesyntax option does not
+actually attempt object cleanup.  You would need to leave this option off if
+you want to execute lingering object cleanup.</p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><b><span
+style='font-family:"Calibri",sans-serif'>&nbsp;Sample Repldiag
+/removelingeringobjects /outputrepadmincommandlinesyntax output</span></b></p>
+
+<p class=MsoList2>Number Complete,Status,Server Name,Naming Context,Reference
+DC,Duration,Error Code,Error Message</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8 dc=forestdnszones,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+87ccb4f8-1057-4cfa-aed6-79b5626db9fd dc=forestdnszones,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+4009aef6-b279-43d2-82f6-4298f02505e8 dc=forestdnszones,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+b3ff6e2e-6025-4782-9d7b-54b0431a374a dc=forestdnszones,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8 cn=configuration,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+87ccb4f8-1057-4cfa-aed6-79b5626db9fd cn=configuration,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+4009aef6-b279-43d2-82f6-4298f02505e8 cn=configuration,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+b3ff6e2e-6025-4782-9d7b-54b0431a374a cn=configuration,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects 5thwardcorpdc.corp.contoso.com
+87ccb4f8-1057-4cfa-aed6-79b5626db9fd
+dc=domaindnszones,dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects
+5thwardcorpdc.corp.contoso.com 4009aef6-b279-43d2-82f6-4298f02505e8
+dc=domaindnszones,dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects
+5thwardcorpdc.corp.contoso.com b3ff6e2e-6025-4782-9d7b-54b0431a374a
+dc=domaindnszones,dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects
+5thwardcorpdc.corp.contoso.com 87ccb4f8-1057-4cfa-aed6-79b5626db9fd dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects
+5thwardcorpdc.corp.contoso.com 4009aef6-b279-43d2-82f6-4298f02505e8
+dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects
+5thwardcorpdc.corp.contoso.com b3ff6e2e-6025-4782-9d7b-54b0431a374a dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>Reference NCs cleaned in 0h:0m:0s.  Cleaning everything else
+against reference NCs.</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects
+5thwardcorpdc.corp.contoso.com a29bbfda-8425-4cb9-9c66-8e07d505a5c6
+dc=forestdnszones,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects dalcorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 dc=forestdnszones,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects nycorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 dc=forestdnszones,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects seacorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 dc=forestdnszones,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects
+5thwardcorpdc.corp.contoso.com a29bbfda-8425-4cb9-9c66-8e07d505a5c6
+cn=configuration,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects dalcorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 cn=configuration,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects nycorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 cn=configuration,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects seacorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 cn=configuration,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects
+5thwardcorpdc.corp.contoso.com a29bbfda-8425-4cb9-9c66-8e07d505a5c6 dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects dalcorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects nycorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects seacorpdc.corp.contoso.com
+a29bbfda-8425-4cb9-9c66-8e07d505a5c6 dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects dalcorpdc.corp.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8
+dc=domaindnszones,dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects nycorpdc.corp.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8
+dc=domaindnszones,dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects seacorpdc.corp.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8 dc=domaindnszones,dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects loncontosodc.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8 dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects dalcorpdc.corp.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8 dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects nycorpdc.corp.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8 dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>repadmin /removelingeringobjects seacorpdc.corp.contoso.com
+9653cb84-7aa2-4a59-ab46-382e5dc1d3a8 dc=corp,dc=contoso,dc=com</p>
+
+<p class=MsoList2>All NCs cleaned in 0h:0m:0s.</p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif'>This output can also be viewed in
+Excel:  Copy commands to a text file.  Modify the text file to include only the
+command portion of the output.  Then open up the text file in Excel. (space
+delimited)</span></p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<table class=NotesTable border=1 cellspacing=0 cellpadding=0 width="98%"
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width="17%" nowrap valign=top style='width:17.0%;border:solid white 1.0pt;
+  padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=NotesCourseLabel style='line-height:normal'><span style='font-size:
+  9.0pt'><img width=24 height=24 id="Picture 231"
+  src="EMSHOL308_Appendix_files/image013.png"> From the developer:</span></p>
+  </td>
+  <td width="83%" valign=top style='width:83.0%;border:solid white 1.0pt;
+  border-left:none;background:#BAFFBA;padding:5.75pt 4.3pt 5.75pt 4.3pt'>
+  <p class=MsoCaption>Does the /outputrepadmincommandlinesyntax exactly mirror
+  the internal operation of repldiag when it performs the lingering object
+  removals?</p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&quot;Short answer
+  = yes.</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Long answer:</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'>The key is that the
+  read/write authoritative reference must be cleaned by comparing to all the
+  other r/w references.&nbsp; Then everything can be done in parallel against
+  the authoritative reference.</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Repldiag is
+  multi-threaded and runs one management thread per NC to create the clean
+  authoritative reference, and then spawns multiple threads to clean against
+  the authoritative reference.&nbsp; So different NCs may complete at different
+  rates depending on number of r/w partitions (in addition to normal factors
+  such as network latency and bandwidth).</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'>As such, both they
+  syntax and native functionality respect the need to serially clean the
+  authoritative reference and then everything else after.&nbsp; In terms of
+  actual order beyond that, there is none of significance to worry about.</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'>In summary, yes the
+  output order is the same as the syntax.&nbsp; Excluding the multi-threading
+  considerations.</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt;font-family:"Calibri",sans-serif'>The code logic is
+  essentially:</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt;font-family:"Courier New"'>f
+  (!isOutputSyntax)</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt;font-family:"Courier New"'>&nbsp;&nbsp;&nbsp;&nbsp;
+  DsVerifyReplica(...)</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt;font-family:"Courier New"'>Else</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+  normal'><span style='font-size:10.0pt;font-family:"Courier New"'>&nbsp;&nbsp;&nbsp;&nbsp;
+  Console.Write line(...)</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-left:0in;line-height:normal'><span
+  style='font-size:10.0pt'>W/console.write line handling the thread
+  synchronization for the output.&quot; - Ken Brumfield</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNoSpacing>&nbsp;</p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoHeading7>More control: /OverRideReferenceDC</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:27.0pt;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif'>This option allows you to specify a DC
+that you want to be used as a reference DC for the partition specified.  In a
+large distributed environment, take careful consideration when choosing the
+reference DC.  Things to consider when choosing a suitable reference DC:</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-size:10.0pt;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>Well connected:
+Fast WAN link.  </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-size:10.0pt;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>Performance:
+Excellent server class hardware:  Disk, RAM, CPU and NIC</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-size:10.0pt;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>Critical Network
+Applications / Services do not depend on this DC:  Such as an Exchange facing
+DC</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-size:10.0pt;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>Other DCs don’t
+report replication failures with reference DC as the source:  filter repadmin
+/showrepl * /csv ouput, or use the topology report created by repldiag /save.</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:27.0pt;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:27.0pt;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoList2>repldiag /removelingeringobjects
+/overridedefaultreferencedc:&quot;cn=configuration,dc=contoso,dc=com&quot;:nycorpdc.corp.contoso.com
+/overridedefaultreferencedc:&quot;dc=corp,dc=contoso,dc=com&quot;:seacorpdc.corp.contoso.com
+/overridedefaultreferencedc:&quot;dc=forestdnszones,dc=contoso,dc=com&quot;:5thwardcorpdc.corp.contoso.com
+/outputrepadmincommandlinesyntax</p>
+
+<p class=MsoList2>&nbsp;</p>
+
+<p class=MsoList2>Replication topology analyzer.  Written by
+kenbrumf@microsoft.com</p>
+
+<p class=MsoList2>Version:  2.0.3397.24022</p>
+
+<p class=MsoList2>Command Line Switch:  /removelingeringobjects</p>
+
+<p class=MsoList2>Command Line Switch: 
+/overridedefaultreferencedc:cn=configuration,dc=contoso,dc=com:nycorpdc.corp.contoso.com</p>
+
+<p class=MsoList2>Command Line Switch:  /overridedefaultreferencedc:dc=corp,dc=contoso,dc=com:seacorpdc.corp.contoso.com</p>
+
+<p class=MsoList2>Command Line Switch: 
+/overridedefaultreferencedc:dc=forestdnszones,dc=contoso,dc=com:5thwardcorpdc.corp.contoso.com</p>
+
+<p class=MsoList2>Command Line Switch:  /outputrepadmincommandlinesyntax</p>
+
+<p class=MsoList2>&nbsp;</p>
+
+<p class=MsoList2>Attempting to override NC cn=configuration,dc=contoso,dc=com
+with DC nycorpdc.corp.contoso.com...       Overriden</p>
+
+<p class=MsoList2>Attempting to override NC dc=corp,dc=contoso,dc=com with DC
+seacorpdc.corp.contoso.com...       Overriden</p>
+
+<p class=MsoList2>Attempting to override NC dc=forestdnszones,dc=contoso,dc=com
+with DC 5thwardcorpdc.corp.contoso.com... Overriden</p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><b><span
+style='font-size:12.0pt;font-family:"Calibri",sans-serif'>/UseRobustDCLocation</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:27.0pt;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif'>Query every DC for a list of DCs in the
+forest.  This ensures replication instability does not cause any to be missed. 
+We have had cases where we clean up lingering objects in the forest but due to
+an AD topology problem some DCs were not cleaned up.  This option is usually
+recommended if you want it to do a thorough job.</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h3><a name="_Ref378370093">References</a></h3>
+
+<p class=MsoNormal><b>Troubleshooting Active Directory Replication Problems -
+TechNet landing page for AD replication troubleshooting articles</b></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in'>http://technet.microsoft.com/en-us/library/cc949120(v=ws.10).aspx</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>Repadmin</span></b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Troubleshooting replication with repadmin</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://www.microsoft.com/en-us/download/details.aspx?id=9028</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>AD Replication Status (adreplstatus)</span></b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Active Directory Replication Status Tool (ADREPLSTATUS) Resources
+Page</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://social.technet.microsoft.com/wiki/contents/articles/12707.active-directory-replication-status-tool-adreplstatus-resources-page.aspx</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>ADReplstatus introduction and screenshot walkthrough</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt'>http://blogs.technet.com/b/askds/archive/2012/08/23/ad-replication-status-tool-is-live.aspx</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>-2146893022</span></b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Troubleshooting AD Replication error -2146893022: The target
+principal name is incorrect.</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt'>http://support.microsoft.com/kb/2090913</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Kerberos for the busy admin</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt'>http://blogs.technet.com/b/askds/archive/2008/03/06/kerberos-for-the-busy-admin.aspx</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>1908</span></b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Troubleshooting AD Replication error 1908: Could not find the
+domain controller for this domain.</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://support.microsoft.com/kb/2712026</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>8606 - Lingering Objects</span></b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Troubleshooting AD Replication error 8606: &quot;Insufficient
+attributes were given to create an object&quot;</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://support.microsoft.com/kb/2028495</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Clean that Active Directory forest of lingering objects</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://blogs.technet.com/b/glennl/archive/2007/07/26/clean-that-active-directory-forest-of-lingering-objects.aspx</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b>Repldiag</b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Repldiag download</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://activedirectoryutils.codeplex.com/</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif'>How to clean one
+partition at a time</span></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://blogs.technet.com/b/robertbo/archive/2011/01/20/can-i-clean-one-partition-at-a-time-with-repldiag-and-other-tips-part-4-of-4.aspx</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>8453</span></b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Troubleshooting AD Replication error 8453: &quot;Replication
+access was denied.&quot;</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://support.microsoft.com/kb/2022387</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>8614</span></b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-size:12.0pt;line-height:115%;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:12.0pt;line-height:115%'>Troubleshooting AD Replication error
+8614: &quot;The Active Directory cannot replicate with this server because the
+time since the last replication with this server has exceeded the tombstone
+lifetime&quot;</span></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://support.microsoft.com/kb/2020053</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-size:12.0pt;line-height:115%;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:12.0pt;line-height:115%'>Fixing When Your Domain Traveled Back
+In Time, the Great System Time Rollback to the Year 2000</span></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'><span class=MsoHyperlink><span
+style='font-style:normal'>http://blogs.technet.com/b/askpfeplat/archive/2012/11/26/fixing-when-your-domain-traveled-back-in-time-the-great-system-time-rollback-to-the-year-2000.aspx</span></span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>PowerShell</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>http://blogs.technet.com/b/ashleymcglone/</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><span
+class=MsoHyperlink><span style='font-style:normal'><span style='text-decoration:
+ none'>&nbsp;</span></span></span></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>AD PowerShell demo</p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt'>http://blogs.technet.com/b/ashleymcglone/archive/2013/10/26/powershell-saturday-005-atlanta-it-s-time-to-part-with-blankie-moving-from-command-line-tools-to-powershell-for-active-directory.aspx</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><b><span
+style='font-size:12.0pt;line-height:115%'>What's new in Active Directory for
+Windows Server 2012 R2</span></b></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:1.0in;margin-bottom:.0001pt;text-indent:-.25in'><span
+style='font-family:Symbol'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Windows Server 2012 R2 Component Updates - What's new in AD for
+Windows Server 2012 R2<br>
+http://technet.microsoft.com/en-us/library/dn535773.aspx</p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Active
+Directory Replication fundamentals</span></b></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-size:12.0pt;line-height:115%;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+style='font-size:12.0pt;line-height:115%'>How the Active Directory Replication
+Model Works</span></b></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in'>http://technet.microsoft.com/en-us/library/cc772726(v=WS.10).aspx</p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-size:12.0pt;line-height:115%;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+style='font-size:12.0pt;line-height:115%'>How Active Directory Replication
+Topology Works</span></b></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in'>http://technet.microsoft.com/en-us/library/cc755994(v=WS.10).aspx</p>
+
+<p class=MsoListParagraph style='margin-left:1.0in;text-indent:-.25in'><span
+style='font-size:12.0pt;line-height:115%;font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><b><span
+style='font-size:12.0pt;line-height:115%'>How DNS Support For Active Directory
+Works</span></b></p>
+
+<p class=MsoListParagraph style='margin-left:1.0in'>http://technet.microsoft.com/en-us/library/cc759550(v=WS.10).aspx</p>
+
+<p class=MsoListParagraph style='margin-left:1.0in'>&nbsp;</p>
+
+<p class=MsoNormal><i>&nbsp;</i></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h3>To recreate this lab environment</h3>
+
+<h6>Create a Windows Server 2012 R2 base image</h6>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Obtain
+a Window Server 2012 R2 ISO image and run the following command (modify the <b>SourcePath</b>
+parameter to point to the location of the ISO).</p>
+
+<p class=PowerShell>.\Convert-WindowsImage.ps1 -SourcePath
+C:\isoimages\WindowsServer2012R2\en_windows_server_2012_r2_x64_dvd_2707946.iso
+-VHDPath D:\Hyper-V\Disks -VHDFormat VHDX -SizeBytes 40GB -VHDType</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+a new virtualized guest and specify the VHD created in the previous step.</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Configure
+the new VM guest with any applications or utilities you want on all DCs.</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Sysprep
+the image and shut down</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Delete
+this VM guest from Hyper-V</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+new differencing disks from this parent disk (one per DC required)</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Create
+new VM guests each one attached to their own differencing disk</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>8.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Configure
+each with a hostname and IP address information that matches this table:</p>
+
+<p class=MsoCaption style='margin-left:.5in'><a name="_Ref377549664">Table </a>5
+lab configuration</p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.5pt;border-collapse:collapse;border:none'>
+ <thead>
+  <tr>
+   <td width=351 style='width:131.5pt;border:solid windowtext 1.0pt;border-right:
+   none;background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead><span style='color:#0D0D0D'>Virtual Machine</span></p>
+   </td>
+   <td width=246 style='width:92.35pt;border-top:solid windowtext 1.0pt;
+   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
+   background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead><span style='color:#0D0D0D'>Role</span></p>
+   </td>
+   <td width=194 valign=top style='width:72.75pt;border-top:solid windowtext 1.0pt;
+   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
+   background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead><span style='color:#0D0D0D'>IP Address</span></p>
+   </td>
+   <td width=157 valign=top style='width:59.0pt;border-top:solid windowtext 1.0pt;
+   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:none;
+   background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead><span style='color:#0D0D0D'>Subnet</span></p>
+   </td>
+   <td width=200 valign=top style='width:74.9pt;border:solid windowtext 1.0pt;
+   border-left:none;background:#00AEEF;padding:0in 0in 0in 0in'>
+   <p class=TableHead><span style='color:#0D0D0D'>DNS Client settings</span></p>
+   </td>
+  </tr>
+ </thead>
+ <tr>
+  <td width=351 valign=top style='width:131.5pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody><b>DC1</b>.root.contoso.com</p>
+  </td>
+  <td width=246 valign=top style='width:92.35pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Domain controller in the forest root domain, DNS, GC, All
+  FSMO roles</p>
+  </td>
+  <td width=194 valign=top style='width:72.75pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.1</p>
+  </td>
+  <td width=157 valign=top style='width:59.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>255.255.255.0</p>
+  </td>
+  <td width=200 valign=top style='width:74.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.2; 127.0.0.1</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=351 valign=top style='width:131.5pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody><b>DC2</b>.root.contoso.com</p>
+  </td>
+  <td width=246 valign=top style='width:92.35pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Domain controller in the forest root domain, DNS, GC</p>
+  </td>
+  <td width=194 valign=top style='width:72.75pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.2</p>
+  </td>
+  <td width=157 valign=top style='width:59.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>255.255.255.0</p>
+  </td>
+  <td width=200 valign=top style='width:74.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.1; 127.0.0.1</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=351 valign=top style='width:131.5pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody><b>ChildDC1</b>.child.root.contoso.com</p>
+  </td>
+  <td width=246 valign=top style='width:92.35pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Domain controller in a child domain in the forest, DNS,
+  GC, Domain-wide FSMO roles</p>
+  </td>
+  <td width=194 valign=top style='width:72.75pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.11</p>
+  </td>
+  <td width=157 valign=top style='width:59.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>255.255.255.0</p>
+  </td>
+  <td width=200 valign=top style='width:74.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.1; 127.0.0.1</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=351 valign=top style='width:131.5pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody><b>ChildDC2</b>.child.root.contoso.com</p>
+  </td>
+  <td width=246 valign=top style='width:92.35pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Read-only domain controller (RODC) in the child domain in
+  the forest, DNS, GC, MinShell</p>
+  </td>
+  <td width=194 valign=top style='width:72.75pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.12</p>
+  </td>
+  <td width=157 valign=top style='width:59.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>255.255.255.0</p>
+  </td>
+  <td width=200 valign=top style='width:74.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.11; 127.0.0.1</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=351 valign=top style='width:131.5pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody><b>TRDC1</b>.treeroot.fabrikam.com</p>
+  </td>
+  <td width=246 valign=top style='width:92.35pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Domain controller in a tree root domain in the forest,
+  DNS, GC, Domain-wide FSMO roles</p>
+  </td>
+  <td width=194 valign=top style='width:72.75pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.21</p>
+  </td>
+  <td width=157 valign=top style='width:59.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>255.255.255.0</p>
+  </td>
+  <td width=200 valign=top style='width:74.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>          127.0.0.1; 192.168.10.1</p>
+  </td>
+ </tr>
+ <tr>
+  <td width=351 valign=top style='width:131.5pt;border-top:none;border-left:
+  solid windowtext 1.0pt;border-bottom:solid windowtext 1.0pt;border-right:
+  none;background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody><b>WIN8Client</b>.root.contoso.com</p>
+  </td>
+  <td width=246 valign=top style='width:92.35pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>Windows 8.1 administration workstation in the forest root
+  domain</p>
+  </td>
+  <td width=194 valign=top style='width:72.75pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.5</p>
+  </td>
+  <td width=157 valign=top style='width:59.0pt;border:none;border-bottom:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>255.255.255.0</p>
+  </td>
+  <td width=200 valign=top style='width:74.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:white;padding:0in 0in 0in 0in'>
+  <p class=TableBody>192.168.10.1; 192.168.10.2</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoListParagraph style='margin-left:.75in'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:.75in;text-indent:-.25in'>9.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Install
+the AD DS role on each machine and then configure them per Table
+5.</p>
+
+<p class=MsoListParagraph style='margin-left:.75in'>&nbsp;</p>
+
+<h4>How to reproduce the issues in this lab environment</h4>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.1in;margin-bottom:.0001pt;line-height:normal'><b><span
+style='font-family:"Calibri",sans-serif;color:black'>Replication Access was
+Denied (8453) repro</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Remove
+&quot;Replicating Directory Changes&quot; permissions from Enterprise RODC
+group on TreeRoot.fabrikam.com partition</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Promote
+a server as an RODC in the child.root.contoso.com domain</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif;color:black'>Result: RODC is unable to
+replicate the TreeRoot partition from any DC with error 8453</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.1in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:.1in;margin-bottom:.0001pt;line-height:normal'><b><span
+style='font-family:"Calibri",sans-serif;color:black'>Lingering Object (8606),
+Tombstone lifetime (8614) and Target Principal Name is incorrect repro
+(-2146893022)</span></b></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>On the
+Hyper-v host: change system time to a time beyond TSL (in the past) -&gt;result
+all Hyper-v guests configured for host time synchronization change their clock
+as well (this is the default configuration for hyper-v) s</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;line-height:normal;vertical-align:
+middle'><span style='font-family:"Calibri",sans-serif;color:black'>If time
+doesn't change immediately: stop and start the vmictimesync service to force a
+sync</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Disable
+host time synchronization on all VMs</span></p>
+
+<p class=PowerShell>Disable-VMIntegrationService -Name &quot;Time
+Synchronization&quot; -vmname adrepl*</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Fix
+Hyper-v Host time (all guests are still using old time)</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Create
+user objects  on DC1 at this time in the past</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Move
+users to Engineering OU </span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Force
+replication out-&gt; this replicates all new users to DCs in the forest</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Pause
+all VMs other than DC1</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>On
+DC1, Delete one or more user objects</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"Calibri",sans-serif;color:black'>Fix
+time on DC1, and then force garbage collection</span></p>
+
+<p class=PowerShell>enable-VMIntegrationService -Name &quot;Time
+Synchronization&quot; -vmname adrepl*</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><span
+style='font-family:"Calibri",sans-serif;color:black'>Shutdown <b>DC1</b>,
+resume other DCs</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>12.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><span
+style='font-family:"Calibri",sans-serif;color:black'>Fix time on remaining DCs
+and then shutdown</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>13.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><span
+style='font-family:"Calibri",sans-serif;color:black'>Power on <b>DC1</b> and
+reset the computer account password with itself:</span></p>
+
+<p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.6in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif;color:black'>netdom resetpwd /server:IP
+/userD root\administrator /passwordD pwd</span></p>
+
+<p class=Code>netdom resetpwd /server:192.168.10.1 /userd:root\administrator
+/passwordd:adrepl123!</p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>14.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><span
+style='font-family:"Calibri",sans-serif;color:black'>Startup the remaining DCs</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:34.2pt;margin-bottom:.0001pt;text-indent:-.25in;line-height:normal;
+vertical-align:middle'><span style='font-family:"Calibri",sans-serif;
+color:black'>15.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><span
+style='font-family:"Calibri",sans-serif;color:black'>On <b>DC2</b>: Make
+changes to one or more user objects (that were deleted from DC1 in step 8)</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:16.2pt;margin-bottom:.0001pt;line-height:normal;vertical-align:
+middle'><span style='font-family:"Calibri",sans-serif;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
+margin-left:16.2pt;margin-bottom:.0001pt;line-height:normal;vertical-align:
+middle'><span style='font-family:"Calibri",sans-serif;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin:0in;margin-bottom:.0001pt;line-height:normal'><span
+style='font-family:"Calibri",sans-serif;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
