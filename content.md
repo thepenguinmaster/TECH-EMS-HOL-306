@@ -55,12 +55,28 @@ The above steps may be necessary if Win8Client uses DC2 for KDC operations. For 
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /bind dc1
 ```
 
+### Manually initiate replication ###
+Execute the following commands to initiate replication manually.
+repadmin /syncall DC1 /Aed
+repadmin /syncall DC2 /Aed
+repadmin /syncall ChildDC1 /Aed
+repadmin /syncall ChildDC2 /Aed
+repadmin /syncall TRDC1 /Aed
 
+
+#### :calling: COMMAND TypeText
+```
+repadmin /syncall DC1 /Aed
+repadmin /syncall DC2 /Aed
+repadmin /syncall ChildDC1 /Aed
+repadmin /syncall ChildDC2 /Aed
+repadmin /syncall TRDC1 /Aed
+```
 ### Open the AD Replication Status Tool
 On Win8Client, double click the AD Replication Status Tool 1.0 shortcut on the desktop.
 
@@ -101,7 +117,7 @@ When refreshing replication status on future runs of the tool, ensure you select
 
 ### View Replication Errors
 Click the Replication Status Viewer tab, and then select Errors Only.  
-Errors currently reported in the environment: -2146893022, 1908, 1256 and 8606
+One or more of the following errors may be reported in the environment: -2146893022, 1908, 1256, 8606 and error 5
 
 #### :warning: ALERT
 If error 8614 is observed, you will need to perform the steps in Exercise 6 at some point in the lab.
@@ -116,11 +132,8 @@ If error 8614 is observed, you will need to perform the steps in Exercise 6 at s
 
 ### View the Replication Error Guide
 Click the Replication Error Guide tab.   
-  
 Click on the message text for any error. A list of DCs with that replication status is displayed in the bottom pane.  
-  
-Click on any error code. Our recommended troubleshooting content on TechNet is displayed \)if the machine has Internet access).   
-  
+Click on any error code. Our recommended troubleshooting content on TechNet is displayed (if the machine has Internet access).   
 Click the Detected Errors Summary tab to see the previous results.
 
 
@@ -164,14 +177,14 @@ repadmin /showrepl \* /csv >showrepl.csv
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 repadmin /showrepl * /csv >showrepl.csv
 ```
 
 
 ### Confirm Results
-Take note of any errors reported on-screen. You will typically see an LDAP error 81 for any DC the tool is unable to collect replication results. Since two LDAP errors are displayed on screen, we failed to collect data from two DCs. \)this is due to an issue you will resolve in Exercise 3)
+Take note of any errors reported on-screen. You will typically see an LDAP error 81 for any DC the tool is unable to collect replication results. Since two LDAP errors are displayed on screen, we failed to collect data from two DCs. (this is due to an issue you will resolve in Exercise 3)
 
 
 
@@ -188,14 +201,12 @@ Within Microsoft Excel: from the Home menu, click Format as Table in the Styles 
 
 ### Simplify the data and review
 Hide column A and column G, by right clicking the column headers and select Hide  
-  
 Reduce the width of other columns so that column K, Last Failure Status is visible.  
-  
 In the Last Failure Time column, click the down arrow and deselect 0  
 This filters the spreadsheet so just the replication errors are displayed.
 
 #### :bulb: KNOWLEDGE
-Repldiag.exe \)available from CodePlex) can also be used to create an Excel importable XML file with this information.
+Repldiag.exe (available from CodePlex) can also be used to create an Excel importable XML file with this information.
 
 
 
@@ -204,9 +215,9 @@ Repldiag.exe \)available from CodePlex) can also be used to create an Excel impo
 ### Use the spreadsheet to answer the questions below
 
 **What replication errors are present?**  
-\)Use column K)  
+(Use column K)  
 **When was replication last successful?**  
-\)Use column J)
+(Use column J)
 
 
 
@@ -233,16 +244,16 @@ Repadmin /showrepl \* /csv | convertfrom-csv | out-gridview
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /showrepl * /csv | convertfrom-csv | out-gridview
 ```
 
 
 ### Filter the results
-Select Add criteria and check Last Failure Status. Select Add.  
+Select **Add criteria** and check **Last Failure Status**. Select **Add**.  
   
-From the "and Last Failure Status contains" filter criteria, select the blue-underlined word "contains" and select does not equal. Type 0 in the text box.
+From the "and Last Failure Status contains" filter criteria, select the blue-underlined word "contains" and select "does not equal". Type 0 in the text box.
 
 #### :bulb: KNOWLEDGE
 It is a good idea to view an unfiltered report initially to see both what is working and not working. To filter the output to just replication errors:
@@ -270,7 +281,7 @@ What impact do the current AD replication failures on DC1 have on the environmen
 >* IntroductionUri = https://lodmanuals.blob.core.windows.net/manuals/Ignite 2016/Videos/IDL3089/Exercise 2- Troubleshoot and Resolve AD Replication Error 2146893022 (Safety).mp4
 
 ## INTRODUCTION MESSAGE
-Why is time important to Active Directory? It's not just about Kerberos and authentication.  
+Why is time accuracy important to Active Directory? It's not just about Kerberos and authentication.  
 AD replication errors -2146893022, 8614 and 8606 routinely go hand in hand. When all are seen together \)or at least the first two), it is a good indicator that the domain controller's time changed by greater than tombstone lifetime.  
 Consider:  
 • Machine account passwords change every 30 days by default  
@@ -310,8 +321,8 @@ What error is displayed?
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /bind DC1
 ```
 
@@ -337,8 +348,8 @@ repadmin /replicate <Dest\_DCs> <Source DC> <Naming Context> \[/force\] \[/async
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /replicate dc2 dc1 "dc=root,dc=contoso,dc=com"
 ```
 
@@ -401,8 +412,8 @@ Repadmin /showobjmeta dc1 "cn=dc1,ou=domain controllers,dc=root,dc=contoso,dc=co
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /showobjmeta dc1 "cn=dc1,ou=domain controllers,dc=root,dc=contoso,dc=com" >dc1objmeta.txt
 Repadmin /showobjmeta dc2 "cn=dc1,ou=domain controllers,dc=root,dc=contoso,dc=com" >>dc1objmeta.txt
 ```
@@ -417,8 +428,8 @@ Repadmin /showobjmeta dc2 "cn=dc1,ou=domain controllers,dc=root,dc=contoso,dc=co
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /showobjmeta dc2 "cn=dc1,ou=domain controllers,dc=root,dc=contoso,dc=com" >>dc1objmeta.txt
 ```
 
@@ -463,8 +474,8 @@ Net stop kdc
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Net stop kdc
 ```
 
@@ -483,8 +494,8 @@ If replication of the root partition was successful, DC2 now has the updated pas
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /replicate dc2 dc1 "dc=root,dc=contoso,dc=com"
 ```
 
@@ -503,8 +514,8 @@ The command instructs DC1 to change its password and tell the DC specified with 
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Net start kdc
 ```
 
@@ -551,8 +562,8 @@ This enables additional detail to be logged to the Netlogon.log file located in 
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Nltest /dbflag:2080ffff
 ```
 
@@ -572,8 +583,8 @@ DSReplicaSync\)) failed with status 1908 \)0x774):
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 repadmin /replicate dc1 childdc1 "dc=child,dc=root,dc=contoso,dc=com"
 ```
 
@@ -587,8 +598,8 @@ Getting DC name failed: Status = 1355 0x54b ERROR\_NO\_SUCH\_DOMAIN
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Nltest /dsgetdc:child /kdc
 ```
 
@@ -601,8 +612,8 @@ Output should look similar to this:
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Nltest /dsgetdc:child
 ```
 
@@ -709,8 +720,8 @@ The /force option is used to ensure the Netlogon cache is not used.
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Nltest /dsgetdc:child /kdc /force
 ```
 
@@ -770,8 +781,8 @@ f. Expand TRDC1's server object and initiate replication on TRDC1 from CHILDDC1
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /replicate dc1 childdc1 "dc=child,dc=root,dc=contoso,dc=com"
 ```
 
@@ -780,10 +791,10 @@ Repadmin /replicate dc1 childdc1 "dc=child,dc=root,dc=contoso,dc=com"
 Use repadmin /syncall to quickly initiate AD replication in the lab environment.    
   
 repadmin /syncall DC1 /Aed  
- repadmin /syncall DC2 /Aed  
- repadmin /syncall ChildDC1 /Aed  
- repadmin /syncall ChildDC2 /Aed  
- repadmin /syncall TRDC1 /Aed  
+repadmin /syncall DC2 /Aed  
+repadmin /syncall ChildDC1 /Aed  
+repadmin /syncall ChildDC2 /Aed  
+repadmin /syncall TRDC1 /Aed  
   
    
   
@@ -791,8 +802,8 @@ We initiate replication manually after correcting an error so we can see verify 
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 repadmin /syncall DC1 /Aed
 repadmin /syncall DC2 /Aed
 repadmin /syncall ChildDC1 /Aed
@@ -890,8 +901,8 @@ AD replication status 8606 and event ID 1988 are good indicators of lingering ob
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /replicate dc1 dc2 “dc=root,dc=contoso,dc=com”
 ```
 
@@ -915,8 +926,8 @@ Event 1988 only reports the first lingering object encountered during the replic
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Get-WinEvent -LogName "Directory Service" -MaxEvents 5 | fl
 ```
 
@@ -965,8 +976,8 @@ Repadmin /showobjmeta \* "<GUID=5ca6ebca-d34c-4f60-b79c-e8bd5af127d8>" >obj.txt
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /showobjmeta * "<GUID=5ca6ebca-d34c-4f60-b79c-e8bd5af127d8>" >obj.txt
 ```
 
@@ -1008,8 +1019,8 @@ Repadmin /removelingeringobjects DC2 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "dc=ro
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /removelingeringobjects DC2 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "dc=root,dc=contoso,dc=com" /Advisory_Mode
 ```
 
@@ -1049,8 +1060,8 @@ Repldiag /removelingeringobjects
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repldiag /removelingeringobjects
 ```
 
@@ -1066,8 +1077,8 @@ repadmin /replicate dc1 dc2 "dc=root,dc=contoso,dc=com"
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 repadmin /replicate dc1 dc2 "dc=root,dc=contoso,dc=com"
 ```
 
@@ -1083,8 +1094,8 @@ At the time of this writing, Replidag \)v 2.0.4947.18978) does not remove linger
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /showobjmeta * "<GUID=5ca6ebca-d34c-4f60-b79c-e8bd5af127d8>" >obj.txt
 ```
 
@@ -1095,8 +1106,8 @@ Repadmin /removelingeringobjects childdc2.child.root.contoso.com 70ff33ce-2f41-4
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /removelingeringobjects childdc2.child.root.contoso.com 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "dc=root,dc=contoso,dc=com"
 ```
 
@@ -1117,73 +1128,28 @@ If this were a production environment, you would also run the repadmin /removeli
 
 
 
-### ALTERNATE TASK 3
-Use these steps if you prefer to remove the lingering objects using repadmin.
-
-#### :warning: ALERT
-If you used repldiag in previous steps to remove the lingering objects, you do not need to perform the alternate task 3 steps 18-31.
-
-
-
-
-
-### Clean up the refence DCs first
-Run the following commands in order from an elevated command shell or PowerShell.  
-  
-  
-
-
-
-
-
-
-### Clean up the Configuration Partition
+#### :bulb: KNOWLEDGE###
+These are the commands that repldiag automates for you:
 Repadmin /removelingeringobjects childdc1.child.root.contoso.com 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "cn=configuration,dc=root,dc=contoso,dc=com"  
-  
+
 Repadmin /removelingeringobjects childdc1.child.root.contoso.com 3fe45b7f-e6b1-42b1-bcf4-2561c38cc3a6 "cn=configuration,dc=root,dc=contoso,dc=com"  
   
 Repadmin /removelingeringobjects childdc1.child.root.contoso.com 0b457f73-96a4-429b-ba81-1a3e0f51c848 "cn=configuration,dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean the ForesDNSZones Partition
 Repadmin /removelingeringobjects childdc1.child.root.contoso.com 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "dc=forestdnszones,dc=root,dc=contoso,dc=com"  
   
 Repadmin /removelingeringobjects childdc1.child.root.contoso.com 3fe45b7f-e6b1-42b1-bcf4-2561c38cc3a6 "dc=forestdnszones,dc=root,dc=contoso,dc=com"  
-  
+ 
 Repadmin /removelingeringobjects childdc1.child.root.contoso.com 0b457f73-96a4-429b-ba81-1a3e0f51c848 "dc=forestdnszones,dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean the Root domain partition
 repadmin /removelingeringobjects dc1.root.contoso.com 3fe45b7f-e6b1-42b1-bcf4-2561c38cc3a6 "dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean the DomainDNSZones application partition
 repadmin /removelingeringobjects dc1.root.contoso.com 3fe45b7f-e6b1-42b1-bcf4-2561c38cc3a6 "dc=domaindnszones,dc=root,dc=contoso,dc=com"
 
-#### :bulb: KNOWLEDGE
 You do not need to clean up reference DCs for the Child, TreeRoot or their DomainDNSZones partitions. This is because there is only one DC in each domain that hosts a writable copy of the partition. The schema partition is not checked or cleaned up because you cannot delete objects from the schema.
 
-
-
-
-
-### Clean remaining DCs
 Now that the reference DCs are cleaned up. Clean up all remaining DCs against the reference DCs
 
-
-
-
-
-### Clean the Configuration Partition
 Repadmin /removelingeringobjects dc1.root.contoso.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "cn=configuration,dc=root,dc=contoso,dc=com"  
   
 Repadmin /removelingeringobjects dc2.root.contoso.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "cn=configuration,dc=root,dc=contoso,dc=com"  
@@ -1192,11 +1158,6 @@ Repadmin /removelingeringobjects childdc2.child.root.contoso.com 0c559ee4-0adc-4
   
 Repadmin /removelingeringobjects trdc1.treeroot.fabrikam.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "cn=configuration,dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean the ForestDNSZones Partitions
 Repadmin /removelingeringobjects dc1.root.contoso.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "dc=forestdnszones,dc=root,dc=contoso,dc=com"  
   
 Repadmin /removelingeringobjects dc2.root.contoso.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "dc=forestdnszones,dc=root,dc=contoso,dc=com"  
@@ -1205,11 +1166,6 @@ Repadmin /removelingeringobjects childdc2.child.root.contoso.com 0c559ee4-0adc-4
   
 Repadmin /removelingeringobjects trdc1.treeroot.fabrikam.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "dc=forestdnszones,dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean the Root domain Partition
 Repadmin /removelingeringobjects childdc1.child.root.contoso.com 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "dc=root,dc=contoso,dc=com"  
   
 Repadmin /removelingeringobjects childdc2.child.root.contoso.com 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "dc=root,dc=contoso,dc=com"  
@@ -1218,18 +1174,8 @@ Repadmin /removelingeringobjects dc2.root.contoso.com 70ff33ce-2f41-4bf4-b7ca-7f
   
 Repadmin /removelingeringobjects trdc1.treeroot.fabrikam.com 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean DomainDNSZones-Root Partition
 Repadmin /removelingeringobjects dc2.root.contoso.com 70ff33ce-2f41-4bf4-b7ca-7fa71d4ca13e "dc=domaindnszones,dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean Child Domain Partition
 Repadmin /removelingeringobjects dc1.root.contoso.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "dc=child,dc=root,dc=contoso,dc=com"  
   
 Repadmin /removelingeringobjects dc2.root.contoso.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "dc=child,dc=root,dc=contoso,dc=com"  
@@ -1238,18 +1184,8 @@ Repadmin /removelingeringobjects childdc2.child.root.contoso.com 0c559ee4-0adc-4
   
 Repadmin /removelingeringobjects trdc1.treeroot.fabrikam.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "dc=child,dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean DomainDNSZones-Child Partition
 Repadmin /removelingeringobjects childdc2.child.root.contoso.com 0c559ee4-0adc-42a7-8668-e34480f9e604 "dc=domaindnszones,dc=child,dc=root,dc=contoso,dc=com"
 
-
-
-
-
-### Clean TreeRoot Domain Partition
 Repadmin /removelingeringobjects childdc1.child.root.contoso.com 0b457f73-96a4-429b-ba81-1a3e0f51c848 "dc=treeroot,dc=fabrikam,dc=com"  
   
 Repadmin /removelingeringobjects childdc2.child.root.contoso.com 0b457f73-96a4-429b-ba81-1a3e0f51c848 "dc=treeroot,dc=fabrikam,dc=com"  
@@ -1286,8 +1222,8 @@ Repadmin /showrepl childdc2 >repl.txt
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /showrepl childdc2 >repl.txt
 ```
 
@@ -1348,8 +1284,8 @@ An administrator manually initiates AD replication: Error 8453 is displayed when
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Dcdiag /test:checksecurityerror
 ```
 
@@ -1428,8 +1364,8 @@ Repadmin /kcc childdc2
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /kcc childdc2
 ```
 
@@ -1493,8 +1429,8 @@ In the output of the above command, verify status for all DCs: registry key set
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /regkey * +strict
 ```
 
@@ -1506,8 +1442,8 @@ Repldiag /removelingeringobjects
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repldiag /removelingeringobjects
 ```
 
@@ -1527,8 +1463,8 @@ Do not run the following command without first verifying that Strict replication
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /regkey DestinationDCName +AllowDivergent
 Repadmin /regkey * +AllowDivergent
 ```
@@ -1546,8 +1482,8 @@ Use repadmin /showrepl \* /csv or the AD Replication Status tool to verify error
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 repadmin /showrepl * /csv
 ```
 
@@ -1558,8 +1494,8 @@ Repadmin /regkey \* -AllowDivergent
 
 
 
-#### :calling: COMMAND
-```TypeText
+#### :calling: COMMAND TypeText
+```
 Repadmin /regkey * -AllowDivergent
 ```
 
