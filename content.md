@@ -39,7 +39,7 @@ Login as ROOT\\Administrator account  with Password: adrepl123!
 
 #### :computer: ACTIONS
 >LODSProperties
->* VM = ADREPL_Win8Client
+>* VM = ADREPL_Win8Client 
 
 
 
